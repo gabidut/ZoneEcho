@@ -1,0 +1,8 @@
+{
+  "variants":
+  {
+    "half=bottom,variant=default": {"model": "modoceanrp:asphalt_block"},
+    "half=top,variant=default": {"model": "modoceanrp:asphalt_block"}
+
+  }
+}

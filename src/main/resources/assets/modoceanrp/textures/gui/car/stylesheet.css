@@ -1,0 +1,22 @@
+#credits
+{
+    width: auto;
+    font-size: 15;
+    top: 90%;
+    height: 10%;
+    left: 50%;
+    right: 50%;
+    color: lightblue;
+    background-color: translucent;
+    font-style: italic;
+}
+#credits:hover
+{
+    color: cyan;
+    text-shadow: disable;
+    font-style: normal;
+}
+
+#btn {
+    color: red;
+}

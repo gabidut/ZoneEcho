@@ -1,0 +1,13 @@
+{
+  "variants":
+  {
+    "normal":
+    {
+      "model": "modoceanrp:asphalt_block"
+    },
+    "inventory":
+    {
+      "model": "modoceanrp:asphalt_block"
+    }
+  }
+}
