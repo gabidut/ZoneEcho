@@ -5,6 +5,7 @@ bin
 .metadata
 .classpath
 .project
+.DS_store
 
 # idea
 out
@@ -23,3 +24,4 @@ run
 
 # Files from Forge MDK
 forge*changelog.txt
+
