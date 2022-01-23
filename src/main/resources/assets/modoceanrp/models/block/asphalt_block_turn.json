@@ -2,6 +2,6 @@
   "parent": "block/cube_all",
   "textures":
   {
-    "all": "modoceanrp:blocks/asphalt_block_line_turn"
+    "all": "modoceanrp:blocks/asphalt_block_line_turn_1"
   }
 }

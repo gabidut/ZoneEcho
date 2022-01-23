@@ -9,7 +9,6 @@ public class MainTab extends CreativeTabs
     public MainTab(String label)
     {
         super(label);
-
     }
 
     @Override

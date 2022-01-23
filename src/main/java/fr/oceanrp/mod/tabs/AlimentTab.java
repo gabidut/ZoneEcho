@@ -15,7 +15,7 @@ public class AlimentTab extends CreativeTabs
     @Override
     public ItemStack getTabIconItem()
     {
-        return new ItemStack(ItemInit.FarineBle);
+        return new ItemStack(ItemInit.Logosp);
     }
 
 }

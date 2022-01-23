@@ -1,0 +1,9 @@
+{
+  "variants":
+  {
+    "variant=default": { "model": "modoceanrp:concrete_slab_double" }
+  }, "inventory":
+{
+  "model": "modoceanrp:concrete_slab_double"
+}
+}

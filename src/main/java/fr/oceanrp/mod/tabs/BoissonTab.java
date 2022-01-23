@@ -15,7 +15,7 @@ public class BoissonTab extends CreativeTabs
     @Override
     public ItemStack getTabIconItem()
     {
-        return new ItemStack(ItemInit.BouteilleEau);
+        return new ItemStack(ItemInit.Logo);
     }
 
 }
