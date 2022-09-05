@@ -1,0 +1,7 @@
+{
+  "parent": "item/generated",
+  "credit": "Made with <3",
+  "textures": {
+    "layer0": "zoneecho:items/storage_unit"
+  }
+}

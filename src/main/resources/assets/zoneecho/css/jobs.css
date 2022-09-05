@@ -1,0 +1,102 @@
+@font-face {
+    font-family: "zoneecho:mariane";
+    /*font-style: italic;*/
+    src: url("zoneecho:css/mariane.ttf");
+    font-size: 90px;
+}
+
+#panel1 {
+    border-radius: 1px;
+    top: 25%;
+    left: 25%;
+    width: 50%;
+    height: 37%;
+    background-color: #313131;
+}
+#job1 {
+    border-radius: 5px;
+    top: 10%;
+    left: 5%;
+    width: 28%;
+    height: 38%;
+    background-color: #3D3D3D;
+}
+
+#job2 {
+    border-radius: 5px;
+    top: 10%;
+    left: 35%;
+    width: 28%;
+    height: 38%;
+    background-color: #3D3D3D;
+}
+
+#job3 {
+    border-radius: 5px;
+    top: 10%;
+    left: 65%;
+    width: 28%;
+    height: 38%;
+    background-color: #3D3D3D;
+}
+#job4 {
+    border-radius: 5px;
+    top: 50%;
+    left: 5%;
+    width: 28%;
+    height: 38%;
+    background-color: #3D3D3D;
+}
+
+#job5 {
+    border-radius: 5px;
+    top: 50%;
+    left: 35%;
+    width: 28%;
+    height: 38%;
+    background-color: #3D3D3D;
+}
+
+#job6 {
+    border-radius: 5px;
+    top: 50%;
+    left: 65%;
+    width: 28%;
+    height: 38%;
+    background-color: #3D3D3D;
+}
+
+#job1:hover {
+    background-color: #3E3E3E;
+}
+
+#job2:hover {
+    background-color: #3E3E3E;
+}
+
+#job3:hover {
+    background-color: #3E3E3E;
+}
+#job4:hover {
+    background-color: #3E3E3E;
+}
+
+#job5:hover {
+    background-color: #3E3E3E;
+}
+
+#job6:hover {
+    background-color: #3E3E3E;
+}
+.jobLabel {
+    text-align: center;
+    horizontal-position: center;
+    vertical-position: center;
+    font-family: "zoneecho:mariane";
+    font-size: 1px;
+    left: 10%;
+    top: 5%;
+    width: 110%;
+    height: 100%;
+    color: #E1E1E1;
+}

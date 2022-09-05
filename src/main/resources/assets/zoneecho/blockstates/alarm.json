@@ -1,0 +1,17 @@
+{
+  "variants":
+  {
+    "facing=north": { "model": "zoneecho:alarm" },
+    "facing=east":  { "model": "zoneecho:alarm", "y": 90 },
+    "facing=south": { "model": "zoneecho:alarm", "y": 180 },
+    "facing=west":  { "model": "zoneecho:alarm", "y": 270 },
+    "normal":
+    {
+      "model": "zoneecho:alarm"
+    },
+    "inventory":
+    {
+      "model": "zoneecho:alarm"
+    }
+  }
+}

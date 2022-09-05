@@ -1,0 +1,37 @@
+@font-face {
+    font-family: "zoneecho:mariane2";
+    /*font-style: italic;*/
+    src: url("zoneecho:css/mariane.ttf");
+    font-size: 90px;
+}
+#panel1 {
+    border-radius: 2px;
+    top: 25%;
+    left: 25%;
+    width: 50%;
+    height: 45%;
+    background-color: #313131;
+}
+#playerpanel {
+    border-radius: 2px;
+    top: 10%;
+    left: 5%;
+    width: 20%;
+    height: 70%;
+    background-color: black;
+}
+#player {
+    width: 60%;
+    height: 55%;
+    top: 20%;
+    right: 55%;
+}
+.textdefault {
+    font-family: "zoneecho:mariane2";
+    color: red;
+}
+#playerlabel {
+    left: 50%;
+}
+#joblabel {
+}

@@ -1,0 +1,51 @@
+.background{
+    background-color: #32373A;
+    height: 86%;
+    width: 32%;
+    top: 7%;
+    left: 34%;
+    border-radius: 10px;
+}
+.select{
+    width: 150px;
+    height: auto;
+    left: 50%;
+    right: 50%;
+    top: 30%;
+}
+.saisie{
+    background-color: #434343;
+    height: 12%;
+    width: 66%;
+    top: 12%;
+    left: 16%;
+    border: none;
+    color: #ffffff;
+    font-size: 15px;
+    text-align: center;
+    padding-left: 5px;
+    padding-top: 5px;
+}
+.button{
+    height: auto;
+    width: auto;
+    top: auto;
+    left: auto;
+    background-image: none;
+    background-color: #29333C;
+}
+.button:hover{
+    background-color: #1F2830;
+}
+#enter {
+    background-color: #4FA830;
+}
+#enter:hover{
+    background-color: #36A22D;
+}
+#clear {
+    background-color: #B03F3F;
+}
+#clear:hover{
+    background-color: #A32D2D;
+}

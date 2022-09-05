@@ -1,0 +1,75 @@
+@font-face {
+    font-family: "zoneecho:arial";
+    /*font-style: italic;*/
+    src: url("zoneecho:css/arial.ttf");
+    font-size: 14px;
+}
+.main {
+    background-image: url("zoneecho:textures/main.png");
+    width: 100%;
+    height: 101%;
+}
+.pan1 {
+    background-color: #484848;
+    top: 5%;
+    left: 3%;
+    width: 20%;
+    height: 8%;
+}
+
+.pan2 {
+    background-color: #484848;
+    width: 20%;
+    height: 8%;
+    top: 18%;
+    left: 3%;
+}
+
+.pan3 {
+    background-color: #484848;
+    width: 20%;
+    height: 8%;
+    top: 31%;
+    left: 3%;
+}
+
+.pan4 {
+    background-color: #484848;
+    width: 20%;
+    height: 8%;
+    top: 80%;
+    left: 3%;
+}
+
+.label {
+    text-align: center;
+
+    /*font-family: "zoneecho:arial";*/
+    width: 98%;
+}
+.label1 {
+    text-align: center;
+
+    /*font-family: "zoneecho:arial";*/
+    width: 98%;
+    color: #FFA5A5;
+}
+.actuTitle {
+    left: 33%;
+    color: #ffffff;
+    top: 7%;
+    text-align: center;
+}
+.actuC {
+    left: 73%;
+    color: #ffffff;
+    top: 12%;
+    text-align: center;
+    width: 20%;
+    height: 50%;
+}
+.rl {
+    width: 5%;
+    height: 5%;
+    background-color: #00A3FF;
+}

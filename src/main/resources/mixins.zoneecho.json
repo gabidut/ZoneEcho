@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "package": "fr.zoneecho.mod.mixin",
+  "minVersion": "0.8",
+  "client": [
+    "MixinMinecraft"
+  ],
+  "server": [],
+  "common": [
+    "MixinDynamXPhysicsHelper"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "refmap": "mixins.zoneecho.refmap.json"
+}
