@@ -17,6 +17,7 @@ public class ItemInit
     public static final Item DEBUG_TOOL = new ItemStaff("debug_tool");
     public static final Item WRENCH = new ItemWrench("wrench");
     public static final Item UNIT_STORAGE_BUS = new ItemStorageUnit("storage_unit");
+    public static final Item FIOLE = new ItemBase("fiole");
 
     // KEYCARDS
 

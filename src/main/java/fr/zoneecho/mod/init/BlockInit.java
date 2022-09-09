@@ -76,7 +76,7 @@ public class BlockInit {
     public static final Block GRILLE1 = new BlockGrille("grille1", Material.IRON);
     public static final Block GRILLE2 = new BlockGrille("grille2", Material.IRON);
     public static final Block BUILDSUPPORT = new BlockUtils("buildsupport", Material.IRON);
-    public static final Block COMPUTER = new BlockUtils("computer", Material.IRON);
+    public static final Block COMPUTER = new BlockComputer("computer", Material.IRON);
     public static final Block CARDWRITER = new BlockCardWriter("cardwriter", Material.IRON);
 
 

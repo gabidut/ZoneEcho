@@ -10,8 +10,14 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 public class PacketSetBleeding implements IMessage {
 
+    private Boolean bleeding;
 
     public PacketSetBleeding() {
+        bleeding = true;
+    }
+
+    public PacketSetBleeding(Boolean bleeding) {
+        this.bleeding = bleeding;
     }
 
 
@@ -19,10 +25,12 @@ public class PacketSetBleeding implements IMessage {
 
     @Override
     public void fromBytes(ByteBuf buf) {
+        bleeding = buf.readBoolean();
     }
 
     @Override
     public void toBytes(ByteBuf buf) {
+        buf.writeBoolean(bleeding);
     }
 
 
@@ -30,7 +38,7 @@ public class PacketSetBleeding implements IMessage {
         @Override
         @SideOnly(Side.CLIENT)
         public IMessage onMessage(PacketSetBleeding message, MessageContext ctx) {
-            ClientProxy.isBleeding = true;
+            ClientProxy.isBleeding = message.bleeding;
             return null;
         }
     }

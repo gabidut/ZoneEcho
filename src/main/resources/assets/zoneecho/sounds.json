@@ -31,11 +31,43 @@
       "stream": true
     }]
   },
+  "master.fire": {
+    "category": "master",
+    "subtitle": "",
+    "sounds": [{
+      "name": "zoneecho:master.fire",
+      "stream": true
+    }]
+  },
+  "master.generator": {
+    "category": "master",
+    "subtitle": "",
+    "sounds": [{
+      "name": "zoneecho:master.generator",
+      "stream": true
+    }]
+  },
+  "master.gaz": {
+    "category": "master",
+    "subtitle": "",
+    "sounds": [{
+      "name": "zoneecho:master.gaz",
+      "stream": true
+    }]
+  },
   "clickbuttonsound": {
     "category": "master",
     "subtitle": "",
     "sounds": [{
       "name": "zoneecho:master.click",
+      "stream": true
+    }]
+  },
+  "master.problem": {
+    "category": "master",
+    "subtitle": "",
+    "sounds": [{
+      "name": "zoneecho:master.problem",
       "stream": true
     }]
   }

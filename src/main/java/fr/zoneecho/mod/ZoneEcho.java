@@ -23,6 +23,7 @@ import fr.zoneecho.mod.webserver.MainHandler;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -49,6 +50,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.GL11;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -68,12 +70,15 @@ public class ZoneEcho {
     public static CommonProxy proxy;
     public static SimpleNetworkWrapper network;
     public static Logger logger;
+    public static ZoneEcho instance;
     public static Database dbPlayer;
     @SideOnly(Side.SERVER)
     public static Socket client;
     public static Database dbUtils;
     @SideOnly(Side.SERVER)
     public static ServerSocket server;
+    @SideOnly(Side.SERVER)
+    public static boolean alarm;
 
 
     @SideOnly(Side.CLIENT)
@@ -88,7 +93,9 @@ public class ZoneEcho {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent e) throws InterruptedException, IOException, NoSuchAlgorithmException {
 
+
         logger = e.getModLog();
+        instance = this;
         proxy.preInit();
         /* network */
         network = NetworkRegistry.INSTANCE.newSimpleChannel("zoneecho");
@@ -111,6 +118,7 @@ public class ZoneEcho {
             ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("zoneecho","css/computer/homeos.css"));
             ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("zoneecho","css/computer/intranet/intranet.css"));
             ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("zoneecho","css/changecode.css"));
+            ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("zoneecho","css/computer/rapport.css"));
 
             if(Ref.optiFPS) {
                 logger.info("FPS optimiser enabled.");
@@ -119,6 +127,7 @@ public class ZoneEcho {
             }
         } else {
             launchSocket();
+            alarm = false;
         }
         network.registerMessage(PacketCardWriter.Handler.class, PacketCardWriter.class, 0, Side.CLIENT);
         network.registerMessage(PacketCardWriterEnd.Handler.class, PacketCardWriterEnd.class, 1, Side.SERVER);
@@ -136,6 +145,7 @@ public class ZoneEcho {
         network.registerMessage(PacketOpenChangeCode.Handler.class, PacketOpenChangeCode.class, 13, Side.CLIENT);
         network.registerMessage(PacketChangeCode.Handler.class, PacketChangeCode.class, 14, Side.SERVER);
         network.registerMessage(PacketSetBleeding.Handler.class, PacketSetBleeding.class, 15, Side.CLIENT);
+        network.registerMessage(PacketOpenRapport.Handler.class, PacketOpenRapport.class, 16, Side.CLIENT);
 
         SyncedDatabases.add("zoneecho_playerdata");
         dbPlayer = Databases.getDatabase("zoneecho_playerdata");
@@ -218,6 +228,7 @@ public class ZoneEcho {
         event.registerServerCommand(new CommandManualSocket());
         event.registerServerCommand(new CommandInfoAboutMe());
         event.registerServerCommand(new CommandAlarm());
+        event.registerServerCommand(new CommandAlarmOther());
         event.registerServerCommand(new CommandMakeMeBug());
     }
     @SubscribeEvent
@@ -236,9 +247,15 @@ public class ZoneEcho {
     public void onEvent(RenderGameOverlayEvent.Post event)
     {
         if(ClientProxy.isBleeding) {
-            logger.info("Bleeding in client");
+            GL11.glPushMatrix();
+            GlStateManager.enableAlpha();
+            GlStateManager.enableBlend();
+            GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
             Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(Ref.MODID, "textures/hud/damage.png"));
             Gui.drawModalRectWithCustomSizedTexture(0, 0, 0, 0, event.getResolution().getScaledWidth(), event.getResolution().getScaledHeight(), event.getResolution().getScaledWidth(), event.getResolution().getScaledHeight());
+            GlStateManager.disableAlpha();
+            GlStateManager.disableBlend();
+            GL11.glPopMatrix();
         }
     }
 
@@ -253,5 +270,4 @@ public class ZoneEcho {
         }
     }
 }
-
 
