@@ -31,7 +31,7 @@ public class ItemStorageUnit extends Item implements IHasModel {
 
     @Override
     public void addInformation(ItemStack stack, @Nullable World worldIn, List<String> tooltip, ITooltipFlag flagIn) {
-
+        System.out.println("Item created");
         NBTTagCompound nbt;
         if (stack.hasTagCompound())
         {
@@ -41,16 +41,21 @@ public class ItemStorageUnit extends Item implements IHasModel {
         {
             nbt = new NBTTagCompound();
         }
-
         assert nbt != null;
-        nbt.setString("data", "empty");
-        stack.setTagCompound(nbt);
+        if(!nbt.hasKey("data")) {
+            nbt.setString("data", "empty");
+            stack.setTagCompound(nbt);
+        }
+
+
 
         tooltip.add("§cNotice inscripte au dos :");
         tooltip.add("§cCette clé USB peut contenir un rapport ou le chemin d'accès vers un rapport.");
         tooltip.add("§cAttention, tout rapport non mis en réseau est sanctionnable.");
         super.addInformation(stack, worldIn, tooltip, flagIn);
     }
+
+
 
     @Override
     public void registerModels() {

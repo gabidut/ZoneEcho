@@ -12,6 +12,8 @@ public enum PlayableJobs {
     admin_dir(1, "Directeur", new BlockPos(0, 100, 0), new ArrayList<>(Arrays.asList(ItemInit.KEYCARD4, ItemInit.WRENCH)), "admin"),
     admin_diradj(2, "Directeur adjoint", new BlockPos(0, 100, 0), new ArrayList<>(Arrays.asList(ItemInit.KEYCARD4, ItemInit.WRENCH)), "admin"),
     admin_sec(3, "Secrétaire", new BlockPos(0, 100, 0), new ArrayList<>(Arrays.asList(ItemInit.KEYCARD3, ItemInit.WRENCH)), "admin"),
+    admin_compt(3, "Comptable", new BlockPos(0, 100, 0), new ArrayList<>(Arrays.asList(ItemInit.KEYCARD3, ItemInit.WRENCH)), "admin"),
+    secu_dir(2, "Directeur sécurité", new BlockPos(0, 100, 0), new ArrayList<>(Arrays.asList(ItemInit.KEYCARD3, ItemInit.WRENCH)), "secu"),
     secu_supervisor(1, "Directeur sécurité", new BlockPos(0, 100, 0), new ArrayList<>(Arrays.asList(ItemInit.KEYCARD3, ItemInit.WRENCH)), "secu"),
     secu_cmd(2, "Commandant", new BlockPos(0, 100, 0), new ArrayList<>(Arrays.asList(ItemInit.KEYCARD3, ItemInit.WRENCH)), "secu"),
     secu_ltn(3, "Lieutenant", new BlockPos(0, 100, 0), new ArrayList<>(Arrays.asList(ItemInit.KEYCARD3, ItemInit.WRENCH)), "secu"),
@@ -144,7 +146,7 @@ public enum PlayableJobs {
         return jobs;
     }
     public enum JobSector {
-        admin(PlayableJobs.admin_sec),
+        admin(PlayableJobs.admin_compt),
         secu(PlayableJobs.secu_cad),
         med(PlayableJobs.med_med),
         sci(PlayableJobs.sci_assis),
@@ -165,6 +167,10 @@ public enum PlayableJobs {
                 }
             }
             return null;
+        }
+
+        public String getIdentifiant() {
+            return this.name();
         }
     }
     public enum listPerso {

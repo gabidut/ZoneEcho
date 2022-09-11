@@ -7,14 +7,16 @@ public class Rapport {
     public String author;
     public Boolean isLocked;
     public Boolean isLocal;
+    public String accessJobAccred;
 
-    public Rapport(String name, String content, String date, String author, Boolean isLocked, Boolean isLocal) {
+    public Rapport(String name, String content, String date, String author, Boolean isLocked, Boolean isLocal, String accessJobAccred) {
         this.name = name;
-        this.content = content;
+        this.content = " " + content;
         this.date = date;
         this.author = author;
         this.isLocked = isLocked;
         this.isLocal = isLocal;
+        this.accessJobAccred = accessJobAccred;
     }
 
     public String getName() {
@@ -30,7 +32,7 @@ public class Rapport {
     }
 
     public void setContent(String content) {
-        this.content = content;
+        this.content = " " + content;
     }
 
     public String getDate() {
@@ -65,12 +67,20 @@ public class Rapport {
         isLocal = local;
     }
 
+    public String getAccessJobAccred() {
+        return accessJobAccred;
+    }
+
+    public void setAccessJobAccred(String accessJobAccred) {
+        this.accessJobAccred = accessJobAccred;
+    }
+
     public static Rapport fromString(String str) {
         String[] split = str.split(";");
-        return new Rapport(split[0], split[1], split[2], split[3], Boolean.parseBoolean(split[4]), Boolean.parseBoolean(split[5]));
+        return new Rapport(split[0], split[1], split[2], split[3], Boolean.parseBoolean(split[4]), Boolean.parseBoolean(split[5]), split[6]);
     }
 
     public static String toString(Rapport rapport) {
-        return rapport.getName() + ";" + rapport.getContent() + ";" + rapport.getDate() + ";" + rapport.getAuthor() + ";" + rapport.getLocked() + ";" + rapport.getLocal();
+        return rapport.getName() + ";" + rapport.getContent() + ";" + rapport.getDate() + ";" + rapport.getAuthor() + ";" + rapport.getLocked() + ";" + rapport.getLocal() + ";" + rapport.getAccessJobAccred();
     }
 }

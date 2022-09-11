@@ -1,6 +1,7 @@
 package fr.zoneecho.mod.util.command;
 
 import fr.zoneecho.mod.ZoneEcho;
+import fr.zoneecho.mod.objects.AccessJobAccred;
 import fr.zoneecho.mod.objects.Rapport;
 import fr.zoneecho.mod.util.network.PacketSetBleeding;
 import net.minecraft.command.CommandBase;
@@ -66,7 +67,32 @@ public class CommandManuaddTag extends CommandBase {
                 }
 
                 assert nbt != null;
-                nbt.setString("data", Rapport.toString(new Rapport("Hello, i'm the title", "And this is my content. I can be in &bBOLD or, &cRED, ...", new Date().toString(), "Gabidut76 le best", true, false)));
+
+
+                nbt.setString("data", Rapport.toString(new Rapport("Hello, i'm the title", " And this is my content. I can be in &2GREEN or, &cRED, ...", new Date().toString(), "Gabidut76 le best", true, false, new AccessJobAccred(0).convertToString())));
+                stack.setTagCompound(nbt);
+            } else if(Objects.equals(args[0], "writeExemple2")) {
+                EntityPlayer player = (EntityPlayer) sender;
+                ItemStack stack = player.getHeldItemMainhand();
+                if(player.getPrimaryHand() == EnumHandSide.RIGHT) {
+                    player.getHeldItemMainhand();
+                } else {
+                    player.getHeldItemOffhand();
+                }
+                NBTTagCompound nbt;
+                if (stack.hasTagCompound())
+                {
+                    nbt = stack.getTagCompound();
+                }
+                else
+                {
+                    nbt = new NBTTagCompound();
+                }
+
+                assert nbt != null;
+
+
+                nbt.setString("data", Rapport.toString(new Rapport("Hello, i'm the title", "&4Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent pulvinar velit eget vestibulum posuere. Lorem ipsum dolor sit amet, consectetur adipiscing elit. In quis mi iaculis, mollis lacus consectetur, luctus erat. Etiam eget hendrerit magna. Cras consequat hendrerit sapien nec pellentesque. Vestibulum a ante at arcu viverra consequat. Proin ornare turpis in hendrerit iaculis. Nunc non ante finibus, iaculis turpis vitae, mattis nibh. Etiam luctus, nisi et maximus rutrum, eros lacus tincidunt metus, ut tempor tellus eros quis mi. ", new Date().toString(), "Gabidut76 le best", true, false, new AccessJobAccred(0).convertToString())));
                 stack.setTagCompound(nbt);
             } else if(Objects.equals(args[0], "unbleed")) {
                 ZoneEcho.network.sendTo(new PacketSetBleeding(false), (EntityPlayerMP) sender);
