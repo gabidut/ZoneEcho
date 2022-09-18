@@ -34,6 +34,7 @@ public class BlockVertical extends Block implements IHasModel {
         setRegistryName(name);
         setCreativeTab(ZoneEcho.ZONECHO_TAB);
         setDefaultState(getDefaultState());
+        setBlockUnbreakable();
         translucent = false;
 
         BlockInit.BLOCKS.add(this);

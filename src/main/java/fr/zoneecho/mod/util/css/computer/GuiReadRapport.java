@@ -145,6 +145,12 @@ public class GuiReadRapport extends GuiFrame {
             GuiPanel barTitleRapport = new GuiPanel();
             globalRapport.setCssClass("globalrapport");
 
+            GuiPanel leftAndRightSeparator = new GuiPanel();
+            leftAndRightSeparator.setCssClass("leftandrightseparator");
+
+
+
+
             GuiPanel leftPanel = new GuiPanel();
             GuiPanel rightPanel = new GuiPanel();
 
@@ -159,6 +165,7 @@ public class GuiReadRapport extends GuiFrame {
 
             System.out.println(rapport.getContent().replaceAll("&", "§"));
             rightPanel.add(content);
+            leftPanel.add(leftAndRightSeparator);
             globalRapport.add(titleRapport);
 
             globalRapport.add(rightPanel);

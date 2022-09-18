@@ -8,6 +8,13 @@
 .a {
     top: 10%;
 }
+.leftandrightseparator {
+    height: 100%;
+    width:10%;
+    left: 20%;
+    background-color: #606870;
+    z-index: 999999;
+}
 .leftpanel {
     background-color: #29333D;
     width: 20%;

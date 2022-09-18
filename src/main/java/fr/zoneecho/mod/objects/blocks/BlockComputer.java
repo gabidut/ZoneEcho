@@ -42,6 +42,11 @@ public class BlockComputer extends Block implements IHasModel {
         ItemInit.ITEMS.add(new ItemBlock(this).setRegistryName(Objects.requireNonNull(this.getRegistryName())));
 
     }
+
+    public boolean isOpaqueCube(IBlockState state) {
+        return false;
+    }
+
     /**
      * Called after the block is set in the Chunk data, but before the Tile Entity is set
      */

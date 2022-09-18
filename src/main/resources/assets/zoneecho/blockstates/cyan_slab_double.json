@@ -1,0 +1,9 @@
+{
+  "variants":
+  {
+    "variant=default": { "model": "zoneecho:cyan_slab_double" }
+  }, "inventory":
+{
+  "model": "zoneecho:cyan_slab_double"
+}
+}

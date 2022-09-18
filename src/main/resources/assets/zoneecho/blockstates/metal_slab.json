@@ -1,12 +1,12 @@
 {
   "variants":
   {
-    "half=bottom,variant=default": {"model": "modoceanrp:concrete_slab"},
-    "half=top,variant=default": {"model": "modoceanrp:concrete_slab"}
+    "half=bottom,variant=default": {"model": "zoneecho:metal_slab_bottom"},
+    "half=top,variant=default": {"model": "zoneecho:metal_slab_bottom"}
 
   },
   "inventory":
   {
-    "model": "modoceanrp:concrete_slab"
+    "model": "zoneecho:metal_slab_bottom"
   }
 }

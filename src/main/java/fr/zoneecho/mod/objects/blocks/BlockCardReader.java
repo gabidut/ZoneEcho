@@ -176,7 +176,7 @@ public class BlockCardReader extends Block implements IHasModel, ITileEntityProv
 
     public int tickRate(World worldIn)
     {
-        return 40;
+        return 90;
     }
     public int getWeakPower(IBlockState blockState, IBlockAccess blockAccess, BlockPos pos, EnumFacing side)
     {

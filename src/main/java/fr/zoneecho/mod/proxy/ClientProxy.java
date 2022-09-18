@@ -2,10 +2,12 @@ package fr.zoneecho.mod.proxy;
 
 import fr.aym.acsguis.api.ACsGuiApi;
 import fr.zoneecho.mod.objects.blocks.BlockCardReader;
+import fr.zoneecho.mod.objects.tiles.TETVSign;
 import fr.zoneecho.mod.objects.tiles.TileDoor;
 import fr.zoneecho.mod.objects.tiles.TileDoorO;
 import fr.zoneecho.mod.objects.tiles.render.RenderTileDoor;
 import fr.zoneecho.mod.objects.tiles.render.RenderTileDoorO;
+import fr.zoneecho.mod.objects.tiles.render.TETVSignRender;
 import fr.zoneecho.mod.util.Ref;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiMainMenu;
@@ -58,6 +60,7 @@ public class ClientProxy extends CommonProxy
     @Override
     public void preInit()
     {
+        ClientRegistry.bindTileEntitySpecialRenderer(TETVSign.class, new TETVSignRender());
         ClientRegistry.bindTileEntitySpecialRenderer(TileDoor.class, new RenderTileDoor());
         ClientRegistry.bindTileEntitySpecialRenderer(TileDoorO.class, new RenderTileDoorO());
         try {

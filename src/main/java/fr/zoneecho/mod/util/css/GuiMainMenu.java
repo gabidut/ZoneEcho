@@ -7,6 +7,7 @@ import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.dynamx.utils.DynamXLoadingTasks;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiScreenServerList;
 import net.minecraft.client.gui.GuiWorldSelection;
 import net.minecraft.client.network.NetHandlerLoginClient;
 import net.minecraft.network.EnumConnectionState;
@@ -14,6 +15,7 @@ import net.minecraft.network.NetworkManager;
 import net.minecraft.network.handshake.client.C00Handshake;
 import net.minecraft.network.login.client.CPacketLoginStart;
 import net.minecraft.util.ResourceLocation;
+import org.lwjgl.input.Keyboard;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,6 +26,7 @@ import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
@@ -105,7 +108,12 @@ public class GuiMainMenu extends GuiFrame {
 
         panel.add(panel1);
         panel.addClickListener((x,y,by) -> {
-            Minecraft.getMinecraft().displayGuiScreen(new GuiWorldSelection(this.getGuiScreen()));
+            if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
+                Minecraft.getMinecraft().displayGuiScreen(new GuiScreenServerList(this.getGuiScreen(), Objects.requireNonNull(Minecraft.getMinecraft().getCurrentServerData())));
+            } else {
+                Minecraft.getMinecraft().displayGuiScreen(new GuiWorldSelection(this.getGuiScreen()));
+            }
+
         });
         panel.add(panel2);
         panel.add(panel3);

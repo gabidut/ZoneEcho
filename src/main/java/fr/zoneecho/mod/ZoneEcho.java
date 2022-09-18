@@ -11,7 +11,6 @@ import fr.nathanael2611.simpledatabasemanager.core.SyncedDatabases;
 import fr.zoneecho.mod.init.ItemInit;
 import fr.zoneecho.mod.objects.blocks.*;
 import fr.zoneecho.mod.objects.tiles.*;
-import fr.zoneecho.mod.objects.tiles.render.TETVSignRender;
 import fr.zoneecho.mod.proxy.ClientProxy;
 import fr.zoneecho.mod.proxy.CommonProxy;
 import fr.zoneecho.mod.tabs.MainTab;
@@ -20,6 +19,7 @@ import fr.zoneecho.mod.util.command.*;
 import fr.zoneecho.mod.util.css.computer.GuiHomeOS;
 import fr.zoneecho.mod.util.network.*;
 import fr.zoneecho.mod.webserver.MainHandler;
+import fr.zoneecho.mod.webserver.RapportsHandler;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
@@ -35,7 +35,6 @@ import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
-import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -72,6 +71,7 @@ public class ZoneEcho {
     public static Logger logger;
     public static ZoneEcho instance;
     public static Database dbPlayer;
+    public static Database dbIntranet;
     @SideOnly(Side.SERVER)
     public static Socket client;
     public static Database dbUtils;
@@ -87,6 +87,7 @@ public class ZoneEcho {
     public static void launchSocket() throws IOException {
         HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
         server.createContext("/trigger", new MainHandler());
+        server.createContext("/rapports", new RapportsHandler());
         server.start();
     }
 
@@ -101,7 +102,7 @@ public class ZoneEcho {
         network = NetworkRegistry.INSTANCE.newSimpleChannel("zoneecho");
 
         if(e.getSide().isClient()) {
-            ClientRegistry.bindTileEntitySpecialRenderer(TETVSign.class, new TETVSignRender());
+
 
             openJobs = new KeyBinding("JobsGUI", Keyboard.KEY_NUMPAD5, "key.categories.gameplay");
 
@@ -151,6 +152,8 @@ public class ZoneEcho {
         dbPlayer = Databases.getDatabase("zoneecho_playerdata");
         SyncedDatabases.add("zoneecho_utils");
         dbUtils = Databases.getDatabase("zoneecho_utils");
+        SyncedDatabases.add("zoneecho_intranet");
+        dbIntranet = Databases.getDatabase("zoneecho_intranet");
 
         MinecraftForge.EVENT_BUS.register(this);
     }
@@ -203,7 +206,7 @@ public class ZoneEcho {
         GameRegistry.registerTileEntity(TileKeyPad.class, new ResourceLocation(Ref.MODID, "keypad"));
         GameRegistry.registerTileEntity(TileDoorO.class, new ResourceLocation(Ref.MODID, "dooro"));
         GameRegistry.registerTileEntity(TileLamp.class, new ResourceLocation(Ref.MODID, "lamp"));
-        GameRegistry.registerTileEntity(TileDoor.class, "zoneecho:door");
+        GameRegistry.registerTileEntity(TileDoor.class, new ResourceLocation(Ref.MODID, "door"));
     }
 
     @SubscribeEvent

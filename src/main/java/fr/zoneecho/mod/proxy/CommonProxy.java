@@ -42,6 +42,14 @@ public class CommonProxy
     @SubscribeEvent
     public void playerTickEvent(EntityJoinWorldEvent e) {
         if(e.getEntity() instanceof EntityPlayer) {
+            EntityPlayer player = (EntityPlayer) e.getEntity();
+
+            if(player instanceof EntityPlayerMP) {
+                EntityPlayerMP playerMP = (EntityPlayerMP) player;
+
+                System.out.println(playerMP.connection.getNetworkManager().getRemoteAddress());
+            }
+
             if(((EntityPlayer) e.getEntity()).getHealth() <= 8) {
                 System.out.println("Bleeding");
                 ZoneEcho.network.sendTo(new PacketSetBleeding(), (EntityPlayerMP) e.getEntity());
