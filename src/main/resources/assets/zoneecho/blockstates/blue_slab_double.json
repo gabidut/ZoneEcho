@@ -5,5 +5,8 @@
   }, "inventory":
 {
   "model": "zoneecho:blue_slab_double"
+}, "normal":
+{
+  "model": "zoneecho:white_slab_bottom"
 }
 }

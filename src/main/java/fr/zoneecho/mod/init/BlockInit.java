@@ -45,6 +45,14 @@ public class BlockInit {
     public static final Block VERTICAL_REDWHITE_WALL = new BlockVertical("vertical_redwhite_wall", Material.IRON);
     public static final Block VERTICAL_YELLOWWHITE_WALL = new BlockVertical("vertical_yellowwhite_wall", Material.IRON);
 
+    public static final Block VERTICAL_BLUELINE_WALL = new BlockVertical("vertical_blueline_wall", Material.IRON);
+    public static final Block VERTICAL_CYANLINE_WALL = new BlockVertical("vertical_cyanline_wall", Material.IRON);
+    public static final Block VERTICAL_GREENLINE_WALL = new BlockVertical("vertical_greenline_wall", Material.IRON);
+    public static final Block VERTICAL_GREYLINE_WALL = new BlockVertical("vertical_greyline_wall", Material.IRON);
+    public static final Block VERTICAL_REDLINE_WALL = new BlockVertical("vertical_redline_wall", Material.IRON);
+    public static final Block VERTICAL_YELLOWLINE_WALL = new BlockVertical("vertical_yellowline_wall", Material.IRON);
+
+
     // VERTICAL LINE
     // public static final Block VERTICAL_SLAB_GREY_LINE = new BlockVertical("vertical_cyan_wall", Material.IRON);
 
@@ -86,6 +94,7 @@ public class BlockInit {
     public static final Block BUILDSUPPORT = new BlockUtils("buildsupport", Material.IRON);
     public static final Block COMPUTER = new BlockComputer("computer", Material.IRON);
     public static final Block CARDWRITER = new BlockCardWriter("cardwriter", Material.IRON);
+    public static final Block CAISSE = new BlockCaisse("caisse", Material.IRON);
 
 
     // DEV ITEMS
@@ -109,5 +118,14 @@ public class BlockInit {
 
     public static final BlockSlab GREEN_SLAB_DOUBLE = new BlockDoubleSlabBase("green_slab_double", Material.IRON, ZoneEcho.ZONECHO_TAB, BlockInit.GREEN_SLAB_HALF);
     public static final BlockSlab GREEN_SLAB_HALF = new BlockHalfSlabBase("green_slab_half", Material.IRON, ZoneEcho.ZONECHO_TAB, BlockInit.GREEN_SLAB_HALF, BlockInit.GREEN_SLAB_DOUBLE);
+
+    public static final BlockSlab RED_SLAB_DOUBLE = new BlockDoubleSlabBase("red_slab_double", Material.IRON, ZoneEcho.ZONECHO_TAB, BlockInit.RED_SLAB_HALF);
+    public static final BlockSlab RED_SLAB_HALF = new BlockHalfSlabBase("red_slab_half", Material.IRON, ZoneEcho.ZONECHO_TAB, BlockInit.RED_SLAB_HALF, BlockInit.RED_SLAB_DOUBLE);
+
+    public static final BlockSlab YELLOW_SLAB_DOUBLE = new BlockDoubleSlabBase("yellow_slab_double", Material.IRON, ZoneEcho.ZONECHO_TAB, BlockInit.YELLOW_SLAB_HALF);
+    public static final BlockSlab YELLOW_SLAB_HALF = new BlockHalfSlabBase("yellow_slab_half", Material.IRON, ZoneEcho.ZONECHO_TAB, BlockInit.YELLOW_SLAB_HALF, BlockInit.YELLOW_SLAB_DOUBLE);
+    public static final BlockSlab GRAY_SLAB_DOUBLE = new BlockDoubleSlabBase("gray_slab_double", Material.IRON, ZoneEcho.ZONECHO_TAB, BlockInit.GRAY_SLAB_HALF);
+    public static final BlockSlab GRAY_SLAB_HALF = new BlockHalfSlabBase("gray_slab_half", Material.IRON, ZoneEcho.ZONECHO_TAB, BlockInit.GRAY_SLAB_HALF, BlockInit.GRAY_SLAB_DOUBLE);
+
 }
 

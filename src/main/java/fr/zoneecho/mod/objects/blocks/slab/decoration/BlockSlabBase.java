@@ -2,6 +2,7 @@ package fr.zoneecho.mod.objects.blocks.slab.decoration;
 
 import fr.zoneecho.mod.ZoneEcho;
 import fr.zoneecho.mod.init.BlockInit;
+import fr.zoneecho.mod.util.interfaces.IHasModel;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.material.Material;
@@ -9,13 +10,14 @@ import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.item.ItemSlab;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 
-public abstract class BlockSlabBase extends BlockSlab {
+public abstract class BlockSlabBase extends BlockSlab implements IHasModel {
     Block half;
     public static final PropertyEnum<Variant> VARIANT = PropertyEnum.<Variant>create("variant", Variant.class);
 
@@ -89,5 +91,9 @@ public abstract class BlockSlabBase extends BlockSlab {
         {
             return "default";
         }
+    }
+    @Override
+    public void registerModels() {
+        ZoneEcho.proxy.registerItemRenderer(ItemSlab.getItemFromBlock(this), 0);
     }
 }

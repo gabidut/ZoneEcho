@@ -41,6 +41,7 @@ public class PacketOpenJobReader implements IMessage {
         @Override
         @SideOnly(Side.CLIENT)
         public IMessage onMessage(PacketOpenJobReader message, MessageContext ctx) {
+            System.out.println("PacketOpenJobReader");
             ACsGuiApi.asyncLoadThenShowGui("jobreader", () -> new GuiJobReader(message.pos));
             return null;
         }

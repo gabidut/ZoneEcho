@@ -57,6 +57,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.security.NoSuchAlgorithmException;
 
+// TODO: UWU mode
+
 @DynamXAddon(modid = Ref.MODID, name = "zoneecho", version = Ref.VERSION)
 @Mod(modid = Ref.MODID, name = Ref.NAME, version = Ref.VERSION, dependencies = "before: dynamxmod;after: sdm;required-after:modularvc")
 @Mod.EventBusSubscriber(modid = Ref.MODID)
@@ -65,6 +67,7 @@ public class ZoneEcho {
     public static final CreativeTabs ZONECHO_UTILS = new MainTab("utils", new ItemStack(ItemInit.KEYCARD3));
     public static final CreativeTabs ZONEECHO_ITEMS = new MainTab("roleplay", new ItemStack(ItemInit.LOGO));
     public static final CreativeTabs ZONEECHO_POUBELLE = new MainTab("DONT USE", new ItemStack(Blocks.BARRIER));
+    public static final CreativeTabs ZONEECHO_BLOCKCHELOU = new MainTab("Démerde toi", new ItemStack(Blocks.STONE_SLAB2));
     @SidedProxy(clientSide = Ref.CLIENT, serverSide = Ref.COMMON)
     public static CommonProxy proxy;
     public static SimpleNetworkWrapper network;
@@ -120,6 +123,7 @@ public class ZoneEcho {
             ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("zoneecho","css/computer/intranet/intranet.css"));
             ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("zoneecho","css/changecode.css"));
             ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("zoneecho","css/computer/rapport.css"));
+            ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("zoneecho","css/jobreader.css"));
 
             if(Ref.optiFPS) {
                 logger.info("FPS optimiser enabled.");
@@ -147,6 +151,8 @@ public class ZoneEcho {
         network.registerMessage(PacketChangeCode.Handler.class, PacketChangeCode.class, 14, Side.SERVER);
         network.registerMessage(PacketSetBleeding.Handler.class, PacketSetBleeding.class, 15, Side.CLIENT);
         network.registerMessage(PacketOpenRapport.Handler.class, PacketOpenRapport.class, 16, Side.CLIENT);
+        network.registerMessage(PacketOpenJobReader.Handler.class, PacketOpenJobReader.class, 17, Side.CLIENT);
+        network.registerMessage(PacketUpdateJobReader.Handler.class, PacketUpdateJobReader.class, 18, Side.SERVER);
 
         SyncedDatabases.add("zoneecho_playerdata");
         dbPlayer = Databases.getDatabase("zoneecho_playerdata");

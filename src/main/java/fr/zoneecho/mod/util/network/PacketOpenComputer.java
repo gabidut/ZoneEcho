@@ -31,7 +31,8 @@ public class PacketOpenComputer implements IMessage {
         @Override
         @SideOnly(Side.CLIENT)
         public IMessage onMessage(PacketOpenComputer message, MessageContext ctx) {
-            ACsGuiApi.asyncLoadThenShowGui("computer",() -> new GuiHomeOS());
+            System.out.println("PacketOpenComputer");
+            ACsGuiApi.asyncLoadThenShowGui("computer", GuiHomeOS::new);
             return null;
         }
     }

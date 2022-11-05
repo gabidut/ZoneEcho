@@ -1,10 +1,13 @@
 package fr.zoneecho.mod.objects.blocks.slab.decoration;
 
+import fr.zoneecho.mod.ZoneEcho;
+import fr.zoneecho.mod.util.interfaces.IHasModel;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemSlab;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
@@ -12,7 +15,7 @@ import net.minecraft.world.IBlockAccess;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-public class BlockDoubleSlabBase extends BlockSlabBase {
+public class BlockDoubleSlabBase extends BlockSlabBase implements IHasModel {
     public BlockDoubleSlabBase(String name, Material material, CreativeTabs tab, BlockSlab half)
     {
         super(name, material, half);
@@ -37,5 +40,9 @@ public class BlockDoubleSlabBase extends BlockSlabBase {
     public boolean isDouble()
     {
         return true;
+    }
+    @Override
+    public void registerModels() {
+        ZoneEcho.proxy.registerItemRenderer(ItemSlab.getItemFromBlock(this), 0);
     }
 }

@@ -27,6 +27,11 @@ public class SoundInit {
 
     public static final SoundEvent SOUND_PROBLEM = createSoundEvent("master.problem");
 
+    public static final SoundEvent SOUND_VALID = createSoundEvent("master.valid");
+
+
+    public static final SoundEvent SOUND_UWU = createSoundEvent("master.uwu");
+
     private static SoundEvent createSoundEvent(String soundName) {
         ResourceLocation soundID = new ResourceLocation("zoneecho", soundName);
         SoundEvents.add(new SoundEvent(soundID).setRegistryName(soundID));

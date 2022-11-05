@@ -10,7 +10,12 @@
     left: 25%;
     width: 50%;
     height: 45%;
-    background-color: #313131;
+    background-color: #29333C;
+}
+#topBar {
+    width: 100%;
+    height: 5%;
+    background-color: #313E49;
 }
 #playerpanel {
     border-radius: 2px;
@@ -18,20 +23,25 @@
     left: 5%;
     width: 20%;
     height: 70%;
-    background-color: black;
+    background-color: #313E49;
 }
 #player {
-    width: 60%;
+    width: 80%;
     height: 55%;
-    top: 20%;
-    right: 55%;
+    top: 23%;
+    right: 45%;
 }
-.textdefault {
-    font-family: "zoneecho:mariane2";
-    color: red;
+/*.textdefault {*/
+/*    font-family: "zoneecho:mariane2";*/
+/*    color: red;*/
+/*}*/
+#surnameLabel {
+    top: 10%;
+    left: 30%;
 }
-#playerlabel {
-    left: 50%;
+#nameLabel {
+    top: 25%;
+    left: 30%;
 }
 #joblabel {
 }

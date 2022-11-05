@@ -5,6 +5,7 @@ import fr.zoneecho.mod.ZoneEcho;
 import fr.zoneecho.mod.objects.tiles.TETVSign;
 import fr.zoneecho.mod.util.PlayableJobs;
 import fr.zoneecho.mod.util.network.PacketSetBleeding;
+import fr.zoneecho.mod.util.network.PacketSetupFirstConnect;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
@@ -16,6 +17,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import java.util.Objects;
 
 
 public class CommonProxy
@@ -53,6 +56,10 @@ public class CommonProxy
             if(((EntityPlayer) e.getEntity()).getHealth() <= 8) {
                 System.out.println("Bleeding");
                 ZoneEcho.network.sendTo(new PacketSetBleeding(), (EntityPlayerMP) e.getEntity());
+            }
+
+            if(Objects.isNull(Databases.getPlayerData((EntityPlayer) e.getEntity()).getString("Identity"))) {
+                ZoneEcho.network.sendTo(new PacketSetupFirstConnect(), (EntityPlayerMP) e.getEntity());
             }
             PlayableJobs.listPerso.getAllPerso().forEach((listPerso -> {
                 System.out.println(Databases.getPlayerData((EntityPlayer) e.getEntity()).isString("whitelist" + listPerso.name()));

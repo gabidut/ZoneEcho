@@ -4,9 +4,9 @@ import fr.zoneecho.mod.ZoneEcho;
 import fr.zoneecho.mod.init.BlockInit;
 import fr.zoneecho.mod.init.ItemInit;
 import fr.zoneecho.mod.objects.tiles.TileCardReader;
+import fr.zoneecho.mod.objects.tiles.TileJobReader;
 import fr.zoneecho.mod.util.interfaces.IHasModel;
 import fr.zoneecho.mod.util.network.PacketOpenJobReader;
-import fr.zoneecho.mod.util.network.PacketPlayKeycard;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.ITileEntityProvider;
@@ -16,14 +16,12 @@ import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -32,13 +30,13 @@ import net.minecraft.util.Rotation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 import java.util.Random;
 
@@ -89,7 +87,7 @@ public class BlockJobReader extends Block implements IHasModel, ITileEntityProvi
         if(worldIn.isRemote) {
             TileEntity tileEntity = worldIn.getTileEntity(pos);
             assert tileEntity != null;
-            tileEntity.getTileData().setInteger("securitylevel", 1);
+            tileEntity.getTileData().setString("securitylevel", "0");
             this.setDefaultFacing(worldIn, pos, state);
         }
     }
@@ -212,56 +210,29 @@ public class BlockJobReader extends Block implements IHasModel, ITileEntityProvi
 
     @Override
     public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        TileEntity tileEntity = worldIn.getTileEntity(pos);
-        assert tileEntity != null;
-        boolean lockdownbypass = false;
+        if (!playerIn.world.isRemote) {
+            if(playerIn.getHeldItemMainhand().getItem().equals(ItemInit.WRENCH)) {
+                ZoneEcho.network.sendTo(new PacketOpenJobReader(pos), (EntityPlayerMP) playerIn.world.getEntityByID(playerIn.getEntityId()));
+            } else {
+                System.out.println("Block activated");
+                playerIn.sendMessage(new TextComponentString(Objects.requireNonNull(worldIn.getTileEntity(pos)).getTileData().toString()));
 
-        if (playerIn.getActiveHand() == EnumHand.MAIN_HAND) {
-            if (playerIn.inventory.getCurrentItem().hasTagCompound()) {
-                ItemStack stack = playerIn.inventory.getCurrentItem();
-                NBTTagCompound nbt;
-                if (stack.hasTagCompound()) {
-                    nbt = stack.getTagCompound();
+                String data = worldIn.getTileEntity(pos).getTileData().getString("restricted");
+
+                String players = data.split(";")[0];
+                String jobs = data.split(";")[1];
+
+                List<String> playerList = Arrays.asList(players.split(","));
+                List<String> jobList = Arrays.asList(jobs.split(","));
+
+                if(playerList.contains(playerIn.getName())) {
+                    playerIn.sendMessage(new TextComponentString("You are allowed to use this block"));
                 } else {
-                    nbt = new NBTTagCompound();
-                }
-
-                assert nbt != null;
-                if (nbt.hasKey("lockdownbypass")) {
-                    lockdownbypass = true;
-                }
-                if (nbt.hasKey("openeverthing")) {
-                    worldIn.setBlockState(pos, state.withProperty(POWERED, Boolean.TRUE), 2);
-                    worldIn.markBlockRangeForRenderUpdate(pos, pos);
-                    worldIn.scheduleUpdate(new BlockPos(pos), this, this.tickRate(worldIn));
-                    notifyNeighbors(worldIn, pos, state.getValue(FACING));
-                }
-            }
-            if (ZoneEcho.dbUtils.getInteger("isLockdown") != 1 || lockdownbypass) {
-                if (playerIn.inventory.getCurrentItem().getItem().equals(ItemInit.WRENCH)) {
-                    if (!worldIn.isRemote) {
-
-                        return true;
-                    }
-                }            } else {
-                playerIn.sendMessage(new TextComponentString(TextFormatting.DARK_RED + "Lecteur inactif."));
-            }
-            if(playerIn.inventory.getCurrentItem().getItem().equals(ItemInit.WRENCH)) {
-                if (!worldIn.isRemote) {
-                    ZoneEcho.network.sendTo(new PacketOpenJobReader(pos), (EntityPlayerMP) playerIn);
+                    playerIn.sendMessage(new TextComponentString("You are not allowed to use this block"));
                 }
             }
         }
         return true;
-    }
-
-
-    private void setPowered(World worldIn, BlockPos pos, IBlockState state) {
-        worldIn.setBlockState(pos, state.withProperty(POWERED, Boolean.TRUE), 2);
-        worldIn.markBlockRangeForRenderUpdate(pos, pos);
-        worldIn.scheduleUpdate(new BlockPos(pos), this, this.tickRate(worldIn));
-        notifyNeighbors(worldIn, pos, state.getValue(FACING));
-        ZoneEcho.network.sendToAllAround(new PacketPlayKeycard(1), new NetworkRegistry.TargetPoint(worldIn.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 10));
     }
 
     @Nullable
@@ -270,16 +241,6 @@ public class BlockJobReader extends Block implements IHasModel, ITileEntityProvi
         return new TileCardReader();
     }
 
-    public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn)
-    {
-        if (!worldIn.isRemote)
-        {
-                if (!((Boolean)state.getValue(POWERED)).booleanValue())
-                {
-                    this.checkPressed(state, worldIn, pos);
-                }
-        }
-    }
     public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
     {
         if (!worldIn.isRemote)
@@ -354,6 +315,6 @@ public class BlockJobReader extends Block implements IHasModel, ITileEntityProvi
     @Nullable
     @Override
     public TileEntity createNewTileEntity(World worldIn, int meta) {
-        return null;
+        return new TileJobReader();
     }
 }

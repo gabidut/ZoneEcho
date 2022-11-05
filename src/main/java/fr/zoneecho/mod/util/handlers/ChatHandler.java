@@ -19,4 +19,5 @@ public class ChatHandler {
             e.getPlayer().sendMessage(new TextComponentString(TextFormatting.GREEN + "J'approuve !"));
         }
     }
+
 }

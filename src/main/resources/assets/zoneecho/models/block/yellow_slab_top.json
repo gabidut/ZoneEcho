@@ -1,0 +1,9 @@
+{
+  "parent": "block/upper_slab",
+  "textures":
+  {
+    "bottom": "zoneecho:blocks/green_wall",
+    "top": "zoneecho:blocks/green_wall",
+    "side": "zoneecho:blocks/green_wall"
+  }
+}

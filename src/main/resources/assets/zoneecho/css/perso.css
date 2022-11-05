@@ -1,92 +1,92 @@
 @font-face {
-    font-family: "zoneecho:mariane3";
-    src: url("zoneecho:css/mariane.ttf");
-    font-size: 75px;
+    font-family: "zoneecho:mariane10";
+    /*font-style: italic;*/
+    src: url("zoneecho:css/arial.ttf");
+    font-size: 20px;
 }
 
-#panel1 {
-    border-radius: 5px;
-    top: 10%;
-    left: 25%;
-    right: 25%;
+
+.mainPanel {
+    left: 40%;
+    top: 15%;
     width: 25%;
-    height: 75%;
-    background-color: #2D2D2D;
+    height: 70%;
+    background-color: #29333C;
 }
-#job1 {
-    border-radius: 5px;
-    top: 22%;
-    left: 5%;
-    width: 90%;
-    height: 15%;
-    background-color: #00A3FF;
-}
-
-#job2 {
-    border-radius: 5px;
-    top: 40%;
-    left: 5%;
-    width: 90%;
-    height: 15%;
-    background-color: #FF8E0A;
+.topPanel {
+    left: 40%;
+    top: 15%;
+    width: 25%;
+    height: 5%;
+    background-color: #344350;
 }
 
-#job3 {
-    border-radius: 5px;
-    top: 58%;
-    left: 5%;
-    width: 90%;
-    height: 15%;
-    background-color: #FFC700;
-}
-
-.persoLabel {
-    text-align: center;
-    horizontal-position: center;
-    vertical-position: center;
-    font-family: "zoneecho:mariane3";
-    font-size: 1px;
-    left: -5%;
-    top: -5%;
-    width: 100%;
-    height: 100%;
-    color: #E1E1E1;
-}
 .title {
-    text-align: center;
-    horizontal-position: center;
-    vertical-position: center;
-    font-family: "zoneecho:mariane3";
-    font-size: 1px;
-    left: -5%;
-    top: 20%;
+    background-image: url("zoneecho:textures/perso-choose.png");
+    left:12%;
+    width: 75%;
+    height: 75%;
+    top: 15%;
+}
+
+.perso1 {
+    left: 10%;
+    top: 25%;
+    width: 80%;
+    height: 15%;
+    background-color: #0066FF;
+    border-radius: 1px;
+}
+.perso2 {
+    left: 10%;
+    top: 45%;
+    width: 80%;
+    height: 15%;
+    background-color: #00CC2D;
+    border-radius: 1px;
+}
+.perso3 {
+    left: 10%;
+    top: 65%;
+    width: 80%;
+    height: 15%;
+    background-color: #EF9350;
+    border-radius: 1px;
+}
+
+.perso1:hover {
+    background-color: #0055D4;
+}
+.perso2:hover {
+    background-color: #009E23;
+}
+.perso3:hover {
+    background-color: #D07F44;
+}
+
+.perso1Label {
     width: 100%;
-    height: 100%;
-    color: #E1E1E1;
-}
-.persoLabel2 {
-    color: #84D3FF;
-    top: 29%;
-    left: 3%;
-    background-color: transparent;
+    height: 120%;
+    color: white;
     text-shadow: none;
-    font-size: 15px;
+    text-align: center;
+    font-family: "zoneecho:mariane10";
 }
-.persoLabel3 {
-    color: #FFC989;
-    top: 2%;
-    left: 3%;
-    height: 100%;
-    background-color: transparent;
+
+.perso2Label {
+    width: 100%;
+    height: 120%;
+    color: white;
     text-shadow: none;
-    font-size: 15px;
+    text-align: center;
+    font-family: "zoneecho:mariane10";
 }
-.persoLabel4 {
-    color: #FFE484;
-    top: 20%;
-    left: 3%;
-    height: 100%;
-    background-color: transparent;
+
+.perso3Label {
+    width: 100%;
+    height: 120%;
+    color: white;
     text-shadow: none;
-    font-size: 15px;
+    text-align: center;
+    font-family: "zoneecho:mariane10";
 }

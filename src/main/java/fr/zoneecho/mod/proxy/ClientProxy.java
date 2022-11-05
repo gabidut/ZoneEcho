@@ -60,6 +60,7 @@ public class ClientProxy extends CommonProxy
     @Override
     public void preInit()
     {
+
         ClientRegistry.bindTileEntitySpecialRenderer(TETVSign.class, new TETVSignRender());
         ClientRegistry.bindTileEntitySpecialRenderer(TileDoor.class, new RenderTileDoor());
         ClientRegistry.bindTileEntitySpecialRenderer(TileDoorO.class, new RenderTileDoorO());

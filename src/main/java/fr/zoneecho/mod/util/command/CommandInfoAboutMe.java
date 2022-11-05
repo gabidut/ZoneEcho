@@ -25,7 +25,7 @@ public class CommandInfoAboutMe extends CommandBase {
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
         if(sender instanceof EntityPlayerMP) {
             EntityPlayerMP player = (EntityPlayerMP) sender;
-            ZoneEcho.network.sendTo(new PacketGuiAboutMe(), (EntityPlayerMP) sender);
+            ZoneEcho.network.sendTo(new PacketGuiAboutMe((EntityPlayerMP) sender), (EntityPlayerMP) sender);
         }
     }
 }

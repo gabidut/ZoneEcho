@@ -1,0 +1,9 @@
+{
+  "parent": "block/half_slab",
+  "textures":
+  {
+    "bottom": "zoneecho:blocks/yellow_wall",
+    "top": "zoneecho:blocks/yellow_wall",
+    "side": "zoneecho:blocks/yellow_wall"
+  }
+}

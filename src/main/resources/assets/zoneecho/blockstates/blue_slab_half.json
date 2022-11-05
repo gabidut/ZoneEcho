@@ -2,9 +2,13 @@
   "variants":
   {
     "half=bottom,variant=default": { "model": "zoneecho:blue_slab_bottom" },
-    "half=top,variant=default": { "model": "zoneecho:blue_slab_bottom" }
-  }, "inventory":
+    "half=top,variant=default": { "model": "zoneecho:blue_slab_top" }
+  }, 
+  "inventory":
   {
     "model": "zoneecho:blue_slab_bottom"
-  }
+  }, "normal":
+{
+  "model": "zoneecho:white_slab_bottom"
+}
 }

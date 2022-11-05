@@ -7,8 +7,9 @@ import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.dynamx.utils.DynamXLoadingTasks;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreenServerList;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.GuiWorldSelection;
+import net.minecraft.client.multiplayer.GuiConnecting;
 import net.minecraft.client.network.NetHandlerLoginClient;
 import net.minecraft.network.EnumConnectionState;
 import net.minecraft.network.NetworkManager;
@@ -26,7 +27,6 @@ import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
@@ -109,7 +109,11 @@ public class GuiMainMenu extends GuiFrame {
         panel.add(panel1);
         panel.addClickListener((x,y,by) -> {
             if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
-                Minecraft.getMinecraft().displayGuiScreen(new GuiScreenServerList(this.getGuiScreen(), Objects.requireNonNull(Minecraft.getMinecraft().getCurrentServerData())));
+                try {
+                    mc.displayGuiScreen((GuiScreen)new GuiConnecting((GuiScreen)(new GuiMainMenu()).getGuiScreen(), Minecraft.getMinecraft(), "localhost", 25565));
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             } else {
                 Minecraft.getMinecraft().displayGuiScreen(new GuiWorldSelection(this.getGuiScreen()));
             }

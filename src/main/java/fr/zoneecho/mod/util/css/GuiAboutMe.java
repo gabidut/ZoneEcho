@@ -5,6 +5,7 @@ import fr.aym.acsguis.component.layout.GuiScaler;
 import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
+import fr.zoneecho.mod.objects.DataAboutMe;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;
 
@@ -12,7 +13,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class GuiAboutMe extends GuiFrame {
-    public GuiAboutMe(String data) {
+    public GuiAboutMe(DataAboutMe data) {
         super(new GuiScaler.Identity());
 
         GuiPanel panel1 = new GuiPanel();
@@ -25,15 +26,21 @@ public class GuiAboutMe extends GuiFrame {
         panel1.add(player);
         panel1.add(playerpanel);
 
-        GuiLabel playerlabel = new GuiLabel(Minecraft.getMinecraft().player.getDisplayNameString());
-        playerlabel.setCssClass("textdefault");
-        playerlabel.setCssId("playerlabel");
-        panel1.add(playerlabel);
+        GuiPanel topBar = new GuiPanel();
+        topBar.setCssId("topBar");
+        panel1.add(topBar);
 
-        GuiLabel joblabel = new GuiLabel(data);
-        playerlabel.setCssClass("textdefault");
-        playerlabel.setCssId("joblabel");
-        panel1.add(joblabel);
+        GuiLabel nameLabel = new GuiLabel(data.getSurname());
+        nameLabel.setCssClass("nameLabel");
+        nameLabel.setCssId("nameLabel");
+        panel1.add(nameLabel);
+
+        GuiLabel surnameLabel = new GuiLabel(data.getName());
+        surnameLabel.setCssClass("surnameLabel");
+        surnameLabel.setCssId("surnameLabel");
+        panel1.add(surnameLabel);
+
+
 
         add(panel1);
     }

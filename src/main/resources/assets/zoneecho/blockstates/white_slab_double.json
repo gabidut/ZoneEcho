@@ -4,6 +4,9 @@
     "variant=default": { "model": "zoneecho:white_slab_double" }
   }, "inventory":
 {
-  "model": "zoneecho:white_slab_double"
+  "model": "zoneecho:white_slab_bottom"
+}, "normal":
+{
+  "model": "zoneecho:white_slab_bottom"
 }
 }

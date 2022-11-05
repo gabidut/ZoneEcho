@@ -70,5 +70,21 @@
       "name": "zoneecho:master.problem",
       "stream": true
     }]
+  },
+  "master.valid": {
+    "category": "master",
+    "subtitle": "",
+    "sounds": [{
+      "name": "zoneecho:master.valid",
+      "stream": true
+    }]
+  },
+  "master.uwu": {
+    "category": "master",
+    "subtitle": "",
+    "sounds": [{
+      "name": "zoneecho:master.uwu",
+      "stream": true
+    }]
   }
 }

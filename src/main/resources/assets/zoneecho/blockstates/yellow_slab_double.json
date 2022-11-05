@@ -1,0 +1,12 @@
+{
+  "variants":
+  {
+    "variant=default": { "model": "zoneecho:yellow_slab_double" }
+  }, "inventory":
+{
+  "model": "zoneecho:yellow_slab_double"
+}, "normal":
+{
+  "model": "zoneecho:yellow_slab_double"
+}
+}

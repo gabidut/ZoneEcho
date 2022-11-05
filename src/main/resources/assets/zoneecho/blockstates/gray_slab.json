@@ -1,0 +1,15 @@
+{
+  "variants":
+  {
+    "half=bottom,variant=default": {"model": "zoneecho:grey_slab_bottom"},
+    "half=top,variant=default": {"model": "zoneecho:grey_slab_top"},
+
+  },
+  "inventory":
+  {
+    "model": "zoneecho:grey_slab_bottom"
+  }, "normal":
+{
+  "model": "zoneecho:grey_slab_bottom"
+}
+}
