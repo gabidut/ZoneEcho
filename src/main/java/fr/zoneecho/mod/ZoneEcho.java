@@ -175,6 +175,7 @@ public class ZoneEcho {
         network.registerMessage(PacketOpenCreatePerso.Handler.class, PacketOpenCreatePerso.class, 20, Side.CLIENT);
         network.registerMessage(PacketOpenDelimiter.Handler.class, PacketOpenDelimiter.class, 21, Side.CLIENT);
         network.registerMessage(PacketSyncDelimiterToPlayer.Handler.class, PacketSyncDelimiterToPlayer.class, 22, Side.CLIENT);
+        network.registerMessage(PacketOpenComputer.Handler.class, PacketOpenComputer.class, 23, Side.CLIENT);
 
         SyncedDatabases.add("zoneecho_playerdata");
         dbPlayer = Databases.getDatabase("zoneecho_playerdata");

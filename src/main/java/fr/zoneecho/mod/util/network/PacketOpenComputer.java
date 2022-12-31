@@ -15,13 +15,10 @@ public class PacketOpenComputer implements IMessage {
     public PacketOpenComputer() {
     }
 
-
-
     @Override
     public void fromBytes(ByteBuf buf) {
 
     }
-
     @Override
     public void toBytes(ByteBuf buf) {
     }

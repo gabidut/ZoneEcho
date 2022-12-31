@@ -16,7 +16,7 @@ import java.util.List;
 
 public class GuiHomeOS extends GuiFrame {
     public GuiHomeOS() {
-        super(new GuiScaler.AdjustToScreenSize(true, 1920, 1080));
+        super(new GuiScaler.Identity());
         setCssClass("background");
 
         GuiPanel hour = new GuiPanel();
