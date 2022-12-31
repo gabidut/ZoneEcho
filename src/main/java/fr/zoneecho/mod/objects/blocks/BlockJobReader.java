@@ -7,6 +7,7 @@ import fr.zoneecho.mod.objects.tiles.TileCardReader;
 import fr.zoneecho.mod.objects.tiles.TileJobReader;
 import fr.zoneecho.mod.util.interfaces.IHasModel;
 import fr.zoneecho.mod.util.network.PacketOpenJobReader;
+import fr.zoneecho.mod.util.network.PacketPlayKeycard;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
 import net.minecraft.block.ITileEntityProvider;
@@ -32,6 +33,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 
 import javax.annotation.Nullable;
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -226,13 +228,23 @@ public class BlockJobReader extends Block implements IHasModel, ITileEntityProvi
                 List<String> jobList = Arrays.asList(jobs.split(","));
 
                 if(playerList.contains(playerIn.getName())) {
+                    setPowered(worldIn, pos, state);
                     playerIn.sendMessage(new TextComponentString("You are allowed to use this block"));
                 } else {
                     playerIn.sendMessage(new TextComponentString("You are not allowed to use this block"));
+                    ZoneEcho.network.sendToAllAround(new PacketPlayKeycard(0), new NetworkRegistry.TargetPoint(worldIn.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 5));
                 }
             }
         }
         return true;
+    }
+
+    private void setPowered(World worldIn, BlockPos pos, IBlockState state) {
+        worldIn.setBlockState(pos, state.withProperty(POWERED, Boolean.TRUE), 2);
+        worldIn.markBlockRangeForRenderUpdate(pos, pos);
+        worldIn.scheduleUpdate(new BlockPos(pos), this, this.tickRate(worldIn));
+        notifyNeighbors(worldIn, pos, state.getValue(FACING));
+        ZoneEcho.network.sendToAllAround(new PacketPlayKeycard(1), new NetworkRegistry.TargetPoint(worldIn.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 5));
     }
 
     @Nullable

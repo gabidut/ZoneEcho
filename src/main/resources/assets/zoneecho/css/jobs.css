@@ -1,102 +1,67 @@
 @font-face {
-    font-family: "zoneecho:mariane";
+    font-family: "zoneecho:arial2";
     /*font-style: italic;*/
-    src: url("zoneecho:css/mariane.ttf");
-    font-size: 90px;
+    src: url("zoneecho:css/arial.ttf");
+    font-size: 100px;
 }
 
-#panel1 {
-    border-radius: 1px;
-    top: 25%;
-    left: 25%;
-    width: 50%;
-    height: 37%;
+.left {
+    top: 30%;
+    left: 30%;
+    width: 20%;
+    height: 50%;
     background-color: #313131;
+    border: 5px #344350;
 }
-#job1 {
-    border-radius: 5px;
-    top: 10%;
-    left: 5%;
-    width: 28%;
-    height: 38%;
-    background-color: #3D3D3D;
+.right {
+    top: 15%;
+    left: 45%;
+    width: 25%;
+    height: 50%;
+    background-color: #344350;
 }
-
-#job2 {
-    border-radius: 5px;
-    top: 10%;
-    left: 35%;
-    width: 28%;
-    height: 38%;
-    background-color: #3D3D3D;
+.creation {
+    background-color: red;
 }
-
-#job3 {
-    border-radius: 5px;
-    top: 10%;
-    left: 65%;
-    width: 28%;
-    height: 38%;
-    background-color: #3D3D3D;
+.security {
+    background-image: none;
+    background-color: #4D68AC;
+    color: #FFFFFF;
+    top: 15%;
+    height: 20%;
+    font-family: "zoneecho:arial2";
 }
-#job4 {
-    border-radius: 5px;
-    top: 50%;
-    left: 5%;
-    width: 28%;
-    height: 38%;
-    background-color: #3D3D3D;
+.medic {
+    background-image: none;
+    background-color: #923E3E;
+    color: #FFFFFF;
+    top: 40%;
+    height: 20%;
+    font-family: "zoneecho:arial2";
 }
-
-#job5 {
-    border-radius: 5px;
-    top: 50%;
-    left: 35%;
-    width: 28%;
-    height: 38%;
-    background-color: #3D3D3D;
-}
-
-#job6 {
-    border-radius: 5px;
-    top: 50%;
-    left: 65%;
-    width: 28%;
-    height: 38%;
-    background-color: #3D3D3D;
-}
-
-#job1:hover {
-    background-color: #3E3E3E;
-}
-
-#job2:hover {
-    background-color: #3E3E3E;
-}
-
-#job3:hover {
-    background-color: #3E3E3E;
-}
-#job4:hover {
-    background-color: #3E3E3E;
-}
-
-#job5:hover {
-    background-color: #3E3E3E;
-}
-
-#job6:hover {
-    background-color: #3E3E3E;
-}
-.jobLabel {
+.scientific {
+    background-image: none;
+    background-color: #327440;
+    color: #FFFFFF;
+    top: 65%;
+    height: 20%;
+    font-family: "zoneecho:arial2";
     text-align: center;
-    horizontal-position: center;
-    vertical-position: center;
-    font-family: "zoneecho:mariane";
-    font-size: 1px;
+}
+
+button {
+    width: 80%;
     left: 10%;
-    top: 5%;
-    width: 110%;
-    height: 100%;
-    color: #E1E1E1;
+    font-size: 2px;
+    text-shadow: disable;
+}
+.title {
+    text-align: center;
+    color: #FFFFFF;
+    left: 5%;
+    width: 70%;
+    top: 25%;
+    height: 50%;
+    font-family: "zoneecho:arial2";
+    font-size: 1px;
 }

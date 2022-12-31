@@ -51,11 +51,11 @@ public class TETVSignRender extends TESRDynamXBlock<TETVSign> {
 
     }
 
-    public void drawSplitString(FontRenderer renderer, String str, int x, int y, int wrapWidth, int textColor) {
+    public static void drawSplitString(FontRenderer renderer, String str, int x, int y, int wrapWidth, int textColor) {
         str = trimStringNewline(str);
         renderSplitStringCentered(renderer, str, x, y, wrapWidth, textColor);
     }
-    private void renderSplitStringCentered(FontRenderer renderer, String str, int x, int y, int wrapWidth, int textColor) {
+    private static void renderSplitStringCentered(FontRenderer renderer, String str, int x, int y, int wrapWidth, int textColor) {
         List<String> lines = renderer.listFormattedStringToWidth(str, 55);
         for (int i = 0; i < lines.size() && i < 4; i++) {
             String line = (String)lines.get(i);
@@ -65,7 +65,7 @@ public class TETVSignRender extends TESRDynamXBlock<TETVSign> {
         }
     }
 
-    private String trimStringNewline(String text) {
+    private static String trimStringNewline(String text) {
         while (text != null && text.endsWith("\n"))
             text = text.substring(0, text.length() - 1);
         return text;

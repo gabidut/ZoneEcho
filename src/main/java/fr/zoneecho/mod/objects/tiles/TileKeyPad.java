@@ -43,5 +43,6 @@ public class TileKeyPad extends TileEntitySyncClient implements ITickable {
 
     @Override
     public void update() {
+        System.out.println(getCode());
     }
 }

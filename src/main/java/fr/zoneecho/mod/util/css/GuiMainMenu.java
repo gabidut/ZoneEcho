@@ -1,15 +1,12 @@
 package fr.zoneecho.mod.util.css;
 
-import fr.aym.acsguis.api.ACsGuiApi;
 import fr.aym.acsguis.component.layout.GuiScaler;
 import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiLabel;
-import fr.dynamx.utils.DynamXLoadingTasks;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiScreen;
+import net.minecraft.client.gui.GuiMultiplayer;
 import net.minecraft.client.gui.GuiWorldSelection;
-import net.minecraft.client.multiplayer.GuiConnecting;
 import net.minecraft.client.network.NetHandlerLoginClient;
 import net.minecraft.network.EnumConnectionState;
 import net.minecraft.network.NetworkManager;
@@ -72,9 +69,7 @@ public class GuiMainMenu extends GuiFrame {
         GuiPanel rl = new GuiPanel();
         rl.setCssClass("rl");
         rl.addClickListener((x,y,u) -> {
-            DynamXLoadingTasks.reload(DynamXLoadingTasks.TaskContext.CLIENT, () -> {
 
-            }, ACsGuiApi.CSS_ERROR_TYPE);
         });
 
 
@@ -109,11 +104,8 @@ public class GuiMainMenu extends GuiFrame {
         panel.add(panel1);
         panel.addClickListener((x,y,by) -> {
             if(Keyboard.isKeyDown(Keyboard.KEY_LSHIFT)) {
-                try {
-                    mc.displayGuiScreen((GuiScreen)new GuiConnecting((GuiScreen)(new GuiMainMenu()).getGuiScreen(), Minecraft.getMinecraft(), "localhost", 25565));
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                // mc.displayGuiScreen((GuiScreen)new GuiConnecting((GuiScreen)(new GuiMainMenu()).getGuiScreen(), Minecraft.getMinecraft(), "localhost", 25565));
+                mc.displayGuiScreen(new GuiMultiplayer(new net.minecraft.client.gui.GuiMainMenu()));
             } else {
                 Minecraft.getMinecraft().displayGuiScreen(new GuiWorldSelection(this.getGuiScreen()));
             }

@@ -1,0 +1,17 @@
+{
+  "variants":
+  {
+    "facing=north": { "model": "zoneecho:delimiter" },
+    "facing=east":  { "model": "zoneecho:delimiter", "y": 90 },
+    "facing=south": { "model": "zoneecho:delimiter", "y": 180 },
+    "facing=west":  { "model": "zoneecho:delimiter", "y": 270 },
+    "normal":
+    {
+      "model": "zoneecho:delimiter"
+    },
+    "inventory":
+    {
+      "model": "zoneecho:delimiter"
+    }
+  }
+}

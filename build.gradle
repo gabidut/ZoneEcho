@@ -91,13 +91,27 @@ dependencies {
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2860'
 
-    // annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
-    // compile 'org.spongepowered:mixin:0.8.2'
+    implementation('org.spongepowered:mixin:0.8.5') {
+        exclude module: 'guava'
+        exclude module: 'commons-io'
+        exclude module: 'gson'
+    }
 
-     implementation(fg.deobf("fr.dynamx:DynamX:3.3.1-rd3"))
-     implementation(fg.deobf("fr.aym.acsguis:ACsGuis:1.2.1-3"))
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    testAnnotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+
+
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    implementation("org.spongepowered:mixin:0.8.2")
+
+
+
+     //implementation(fg.deobf("fr.dynamx:DynamX:3.3.1-rd3"))
+     // implementation(fg.deobf("fr.aym.acsguis:ACsGuis:1.2.1-3"))
      // implementation 'club.minnced:discord-rpc-release:v3.4.0'
      implementation fileTree(dir: 'libs2', includes: ['*.jar'])
+
+    shadow group: 'org.spongepowered', name: 'mixin', version: '0.8.2'
 
     // For more info...
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
@@ -151,6 +165,9 @@ jar {
         attributes "TweakClass": "org.spongepowered.asm.launch.MixinTweaker"
         attributes "TweakOrder": "0"
         attributes "MixinConfigs": "mixins.zoneecho.json"
+        attributes 'FMLCorePlugin': 'net.montoyo.mcef.ShutdownPatcher',
+                'FMLCorePluginContainsFMLMod': 'true',
+                'Main-Class': 'net.montoyo.mcef.setup.SetupUI'
     }
 }
 
@@ -170,6 +187,11 @@ publishing {
 
 mixin {
     add sourceSets.main, "refmap.zoneecho.json"
+    config 'mixins.zoneecho.json'
+    debug.verbose = true
+    debug.export = true
+    dumpTargetOnFailure = true
+
 }
 
 build.dependsOn(shadowJar)
@@ -179,6 +201,9 @@ shadowJar {
     configurations = [project.configurations.shade]
     relocate 'lib.group', "${project.group}.shadow.lib.group" // ensure repackaged packages have unique names
     exclude 'openauth-1.1.2.jar' // exclude openauth from the shadow jar
+    dependencies {
+        include(dependency('org.spongepowered:mixin:0.8.5'))
+    }
 }
 
 reobf {

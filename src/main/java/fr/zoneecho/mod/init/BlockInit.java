@@ -15,6 +15,10 @@ import java.util.List;
 
 public class BlockInit {
     public static final List<Block> BLOCKS = new ArrayList<Block>();
+    // STAFF
+
+    public static final Block DELIMITER = new BlockDelimiter("delimiter", Material.IRON, 0);
+
     // BASE BUILD
     public static final Block WHITE_WALL = new BlockBase("white_wall", Material.IRON);
     public static final Block RED_WALL = new BlockBase("red_wall", Material.IRON);

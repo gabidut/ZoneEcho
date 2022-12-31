@@ -18,6 +18,7 @@ public class ItemInit
     public static final Item WRENCH = new ItemWrench("wrench");
     public static final Item UNIT_STORAGE_BUS = new ItemStorageUnit("storage_unit");
     public static final Item FIOLE = new ItemBase("fiole");
+    public static final Item MICRO = new ItemBase("micro");
 
     // KEYCARDS
 
@@ -27,6 +28,7 @@ public class ItemInit
     public static final Item KEYCARD3 = new ItemBase("keycard3");
     public static final Item KEYCARD4 = new ItemBase("keycard4");
     public static final Item KEYCARD5 = new ItemBase("keycard5");
+
 
 
     // HACK TOOL

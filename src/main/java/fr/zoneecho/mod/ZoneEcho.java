@@ -9,6 +9,7 @@ import fr.nathanael2611.simpledatabasemanager.core.Database;
 import fr.nathanael2611.simpledatabasemanager.core.Databases;
 import fr.nathanael2611.simpledatabasemanager.core.SyncedDatabases;
 import fr.zoneecho.mod.init.ItemInit;
+import fr.zoneecho.mod.objects.Delimiter;
 import fr.zoneecho.mod.objects.blocks.*;
 import fr.zoneecho.mod.objects.tiles.*;
 import fr.zoneecho.mod.proxy.ClientProxy;
@@ -16,7 +17,7 @@ import fr.zoneecho.mod.proxy.CommonProxy;
 import fr.zoneecho.mod.tabs.MainTab;
 import fr.zoneecho.mod.util.Ref;
 import fr.zoneecho.mod.util.command.*;
-import fr.zoneecho.mod.util.css.computer.GuiHomeOS;
+import fr.zoneecho.mod.util.css.GuiPersoCreate;
 import fr.zoneecho.mod.util.network.*;
 import fr.zoneecho.mod.webserver.MainHandler;
 import fr.zoneecho.mod.webserver.RapportsHandler;
@@ -31,6 +32,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -38,6 +40,7 @@ import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -56,6 +59,8 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 
 // TODO: UWU mode
 
@@ -83,7 +88,6 @@ public class ZoneEcho {
     @SideOnly(Side.SERVER)
     public static boolean alarm;
 
-
     @SideOnly(Side.CLIENT)
     public static KeyBinding openJobs;
 
@@ -103,6 +107,19 @@ public class ZoneEcho {
         proxy.preInit();
         /* network */
         network = NetworkRegistry.INSTANCE.newSimpleChannel("zoneecho");
+
+        /* DEV ZONE */
+        List<AxisAlignedBB> ls = new ArrayList<>();
+        ls.add(new AxisAlignedBB(0, 0, 0, 1, 1, 1));
+        ls.add(new AxisAlignedBB(0, 0, 0, 2, 2, 2));
+        ls.add(new AxisAlignedBB(0, 0, 0, 3, 3, 3));
+
+        Delimiter exemple = new Delimiter(ls);
+
+        System.out.println(exemple.getDelimiter());
+        System.out.println(exemple.toString());
+
+        System.out.println(Delimiter.fromString(exemple.toString()).getDelimiter());
 
         if(e.getSide().isClient()) {
 
@@ -124,6 +141,7 @@ public class ZoneEcho {
             ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("zoneecho","css/changecode.css"));
             ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("zoneecho","css/computer/rapport.css"));
             ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("zoneecho","css/jobreader.css"));
+            ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("zoneecho","css/delimiter.css"));
 
             if(Ref.optiFPS) {
                 logger.info("FPS optimiser enabled.");
@@ -153,6 +171,10 @@ public class ZoneEcho {
         network.registerMessage(PacketOpenRapport.Handler.class, PacketOpenRapport.class, 16, Side.CLIENT);
         network.registerMessage(PacketOpenJobReader.Handler.class, PacketOpenJobReader.class, 17, Side.CLIENT);
         network.registerMessage(PacketUpdateJobReader.Handler.class, PacketUpdateJobReader.class, 18, Side.SERVER);
+        network.registerMessage(PacketSetupFirstConnect.Handler.class, PacketSetupFirstConnect.class, 19, Side.CLIENT);
+        network.registerMessage(PacketOpenCreatePerso.Handler.class, PacketOpenCreatePerso.class, 20, Side.CLIENT);
+        network.registerMessage(PacketOpenDelimiter.Handler.class, PacketOpenDelimiter.class, 21, Side.CLIENT);
+        network.registerMessage(PacketSyncDelimiterToPlayer.Handler.class, PacketSyncDelimiterToPlayer.class, 22, Side.CLIENT);
 
         SyncedDatabases.add("zoneecho_playerdata");
         dbPlayer = Databases.getDatabase("zoneecho_playerdata");
@@ -162,6 +184,7 @@ public class ZoneEcho {
         dbIntranet = Databases.getDatabase("zoneecho_intranet");
 
         MinecraftForge.EVENT_BUS.register(this);
+
     }
     public static BlockDynxDoor door;
     public static BlockDynxDoorO dooropen;
@@ -195,12 +218,14 @@ public class ZoneEcho {
         BlockDynxKeypad keypad = new BlockDynxKeypad(Material.ANVIL, Ref.MODID, "keypad", "keypad/keypad.obj");
         BlockDynxNuclear nuclear_panel = new BlockDynxNuclear(Material.ANVIL, Ref.MODID, "nuclear_panel", "nuclear_panel/nuclear_panel.obj");
         BlockDynxTVSign tvsign = new BlockDynxTVSign(Material.ANVIL, Ref.MODID, "tvsign", "tvsign/tele.obj");
+        BlockDynx displaytwoscreen = new BlockDynx(Material.ANVIL, Ref.MODID, "display", "display/display.obj");
 
         lampV2Yellow = new BlockDynxLampV2(Material.SAND, Ref.MODID, "lampY", "lamp/yellow.obj", 1);
         lampV2fGray = new BlockDynxLampV2(Material.SAND, Ref.MODID, "lampG", "lamp/gray.obj", 3);
         lampV2Red = new BlockDynxLampV2(Material.SAND, Ref.MODID, "lampR", "lamp/red.obj", 2);
 
         BlockDynx fer = new BlockDynx(Material.ANVIL, Ref.MODID, "fer", "fer/fer.obj");
+        BlockDynx tv2 = new BlockDynx(Material.ANVIL, Ref.MODID, "tv2", "tv2/tv.obj");
         // DOOR
         door = new BlockDynxDoor(Material.ANVIL, Ref.MODID, "Porte", "door/door.obj");
         dooropen = new BlockDynxDoorO(Material.ANVIL, Ref.MODID, "PorteO", "dooropen/dooropen.obj");
@@ -208,6 +233,7 @@ public class ZoneEcho {
     }
     @Mod.EventHandler
     public static void init(FMLInitializationEvent e) {
+
         GameRegistry.registerTileEntity(TileCardReader.class, new ResourceLocation(Ref.MODID, "card_reader"));
         GameRegistry.registerTileEntity(TileKeyPad.class, new ResourceLocation(Ref.MODID, "keypad"));
         GameRegistry.registerTileEntity(TileDoorO.class, new ResourceLocation(Ref.MODID, "dooro"));
@@ -223,8 +249,14 @@ public class ZoneEcho {
             event.setCanceled(true);
             event.dispatchToAllExceptSpeaker(100);
         }
+        if (event.getSpeaker().getActiveItemStack() == null) {
+            return;
+        }
     }
 
+    @Mod.EventHandler
+    public void postinit(FMLPostInitializationEvent e) {
+    }
 
     @Mod.EventHandler
     public void serverStarting(FMLServerStartingEvent event) {
@@ -239,6 +271,7 @@ public class ZoneEcho {
         event.registerServerCommand(new CommandAlarm());
         event.registerServerCommand(new CommandAlarmOther());
         event.registerServerCommand(new CommandMakeMeBug());
+        event.registerServerCommand(new CommandChooseJob());
     }
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
@@ -246,8 +279,8 @@ public class ZoneEcho {
     {
         if(openJobs.isPressed())
         {
-            //ACsGuiApi.asyncLoadThenShowGui("jobs", GuiPersoSel::new);
-            ACsGuiApi.asyncLoadThenShowGui("computer", GuiHomeOS::new);
+            ACsGuiApi.asyncLoadThenShowGui("jobs", GuiPersoCreate::new);
+            // ACsGuiApi.asyncLoadThenShowGui("computer", GuiHomeOS::new);
         }
     }
 

@@ -18,6 +18,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
@@ -64,7 +65,7 @@ public class BlockCardReader extends Block implements IHasModel, ITileEntityProv
         // return new AxisAlignedBB(0.2D, 0.2D, 0.3D, 0.0D, 0.7D, 0.7D);
 
         if (state.getValue(FACING) == EnumFacing.NORTH) {
-            return new AxisAlignedBB(0.3D, 0.3D, 0.8D, 0.7D, 0.7D, 0.8D);
+            return new AxisAlignedBB(0.3D, 0.3D, 1.0D, 0.7D, 0.7D, 0.8D);
         } else if (state.getValue(FACING) == EnumFacing.SOUTH) {
             return new AxisAlignedBB(0.31D, 0.3D, 0.0D, 0.71D, 0.7D, 0.1D);
         } else if (state.getValue(FACING) == EnumFacing.WEST) {
@@ -74,6 +75,7 @@ public class BlockCardReader extends Block implements IHasModel, ITileEntityProv
         }
         return null;
     }
+
     public boolean isFullCube(IBlockState state)
     {
         return false;
@@ -109,19 +111,25 @@ public class BlockCardReader extends Block implements IHasModel, ITileEntityProv
             if (enumfacing == EnumFacing.NORTH && iblockstate.isFullBlock() && !iblockstate1.isFullBlock())
             {
                 enumfacing = EnumFacing.NORTH;
+                Objects.requireNonNull(worldIn.getTileEntity(pos)).getTileData().setFloat("rotate", 270F);
             }
             else if (enumfacing == EnumFacing.SOUTH && iblockstate1.isFullBlock() && !iblockstate.isFullBlock())
             {
                 enumfacing = EnumFacing.NORTH;
+                Objects.requireNonNull(worldIn.getTileEntity(pos)).getTileData().setFloat("rotate", 180F);
             }
             else if (enumfacing == EnumFacing.WEST && iblockstate2.isFullBlock() && !iblockstate3.isFullBlock())
             {
                 enumfacing = EnumFacing.NORTH;
+                Objects.requireNonNull(worldIn.getTileEntity(pos)).getTileData().setFloat("rotate", 90F);
             }
             else if (enumfacing == EnumFacing.EAST && iblockstate3.isFullBlock() && !iblockstate2.isFullBlock())
             {
                 enumfacing = EnumFacing.NORTH;
+                Objects.requireNonNull(worldIn.getTileEntity(pos)).getTileData().setFloat("rotate", 0F);
             }
+
+
 
             worldIn.setBlockState(pos, state.withProperty(FACING, enumfacing), 2);
         }
@@ -289,10 +297,9 @@ public class BlockCardReader extends Block implements IHasModel, ITileEntityProv
                     if (tileEntity.getTileData().getInteger("securitylevel") <= 5) {
                         tileEntity.getTileData().setInteger("securitylevel", tileEntity.getTileData().getInteger("securitylevel") + 1);
                         playerIn.sendMessage(new TextComponentString(TextFormatting.GREEN + "Niveau de sécurité augmenté au niveau " + tileEntity.getTileData().getInteger("securitylevel")));
-                        ZoneEcho.network.sendToAllAround(new PacketPlayKeycard(tileEntity.getTileData().getInteger("securitylevel")), new NetworkRegistry.TargetPoint(worldIn.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 10));
+                        ZoneEcho.network.sendTo(new PacketPlayKeycard(0), (EntityPlayerMP) playerIn);
                     } else {
-                        playerIn.sendMessage(new TextComponentString(TextFormatting.RED + "Vous ne pouvez pas augmenter le niveau de sécurité !"));
-                        ZoneEcho.network.sendToAllAround(new PacketPlayKeycard(0), new NetworkRegistry.TargetPoint(worldIn.provider.getDimension(), pos.getX(), pos.getY(), pos.getZ(), 10));
+                        tileEntity.getTileData().setInteger("securitylevel", 0);
                     }
                 }
             } else {

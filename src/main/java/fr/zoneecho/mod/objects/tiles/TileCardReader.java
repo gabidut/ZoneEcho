@@ -11,10 +11,29 @@ public class TileCardReader extends TileEntity {
         return false;
     }
 
-    public void readFromNBT(NBTTagCompound nbtTag)
-    {
-        super.readFromNBT(nbtTag);
-        nbtTag.getInteger("securitylevel");
+    String securitylevel = "";
+
+    @Override
+    public void readFromNBT(NBTTagCompound tagCompound) {
+        super.readFromNBT(tagCompound);
+        securitylevel = tagCompound.getString("securitylevel");
     }
+
+    @Override
+    public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
+        super.writeToNBT(tagCompound);
+        tagCompound.setString("securitylevel",securitylevel);
+        return tagCompound;
+    }
+
+    public void setSecuritylevel(String code) {
+        this.securitylevel = code;
+    }
+
+    public String getSecuritylevel() {
+        return this.securitylevel;
+    }
+
+
 
 }

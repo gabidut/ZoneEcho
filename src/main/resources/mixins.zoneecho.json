@@ -6,9 +6,6 @@
     "MixinMinecraft"
   ],
   "server": [],
-  "common": [
-    "MixinDynamXPhysicsHelper"
-  ],
   "injectors": {
     "defaultRequire": 1
   },
