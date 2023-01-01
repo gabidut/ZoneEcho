@@ -2,7 +2,7 @@
     font-family: "ze:bauhause";
     /*font-style: italic;*/
     src: url("zoneecho:css/bauhaus93.ttf");
-    font-size: 70px;
+    font-size: 125px;
 }
 .background{
     background-image: url("zoneecho:textures/computer/background.png");
@@ -92,7 +92,7 @@
 .element_title{
     background-color: #344350;
     color: #ffffff;
-    font-size: 2px;
+    font-size: 1%;
     font-family: "ze:bauhause";
     text-align: center;
     width: 100%;
@@ -111,7 +111,7 @@
     left: 0%;
     top: 0%;
     text-align: left;
-    font-size: 1px;
+    font-size: 1%;
     font-family: "ze:bauhaus";
 }
 
@@ -167,7 +167,7 @@
     right: 50%;
     top: 8px;
     text-align: center;
-    font-size: 1px;
+    font-size: 1%;
     font-family: "ze:bauhaus";
 }
 .accesslevel {
@@ -176,6 +176,6 @@
     top: 18px;
     left: 0%;
     text-align: center;
-    font-size: 3px;
+    font-size: 2%;
     font-family: "ze:bauhaus";
 }

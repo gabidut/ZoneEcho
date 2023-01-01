@@ -4,6 +4,7 @@ import fr.zoneecho.mod.ZoneEcho;
 import fr.zoneecho.mod.init.BlockInit;
 import fr.zoneecho.mod.init.ItemInit;
 import fr.zoneecho.mod.util.interfaces.IHasModel;
+import fr.zoneecho.mod.util.network.PacketOpenComputer;
 import fr.zoneecho.mod.util.network.PacketOpenRapport;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockHorizontal;
@@ -153,7 +154,12 @@ public class BlockComputer extends Block implements IHasModel {
             System.out.println(playerIn.getHeldItemMainhand());
             ZoneEcho.network.sendTo(new PacketOpenRapport(playerIn.getHeldItemMainhand().getTagCompound()), (EntityPlayerMP) playerIn);
             return true;
-        } else {
+        } else if (!worldIn.isRemote) {
+            System.out.println("x236");
+            ZoneEcho.network.sendTo(new PacketOpenComputer(), (EntityPlayerMP) playerIn);
+            return true;
+        }
+        else {
             return false;
         }
 

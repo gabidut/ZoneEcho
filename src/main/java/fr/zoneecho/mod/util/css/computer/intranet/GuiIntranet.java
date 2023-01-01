@@ -24,11 +24,11 @@ public class GuiIntranet extends GuiFrame {
 
     private static String prenom = "Charles-Ferdinand";
     private static String nom = "d'Artois";
-    private static String job = "Diretceur du site";
+    private static String job = "Directeur du site";
     private static String branche = "Administration";
 
     public GuiIntranet() {
-        super(new GuiScaler.AdjustToScreenSize(true, 1920, 1080));
+        super(new GuiScaler.Identity());
         setCssClass("background");
 
         // Sreen
