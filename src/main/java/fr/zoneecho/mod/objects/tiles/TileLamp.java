@@ -1,6 +1,7 @@
 package fr.zoneecho.mod.objects.tiles;
 
 
+import fr.dynamx.common.DynamXContext;
 import fr.dynamx.common.contentpack.type.objects.BlockObject;
 import fr.nathanael2611.simpledatabasemanager.core.Databases;
 import fr.zoneecho.mod.ZoneEcho;
@@ -12,9 +13,11 @@ import java.util.Objects;
 
 public class TileLamp extends TileEntitySyncClient implements ITickable {
 
-    private int newState = 0;
+    private BlockObject b;
+    private String state = "";
     public TileLamp(BlockObject<?> blockObjectInfo) {
         super(blockObjectInfo);
+        this.b = blockObjectInfo;
     }
 
     public void readFromNBT(NBTTagCompound nbtTag)
@@ -23,28 +26,36 @@ public class TileLamp extends TileEntitySyncClient implements ITickable {
         nbtTag.getInteger("state");
     }
 
-
+    @Override
+    public NBTTagCompound writeToNBT(NBTTagCompound tagCompound) {
+        super.writeToNBT(tagCompound);
+        tagCompound.setString("state", state);
+        return tagCompound;
+    }
 
     @Override
     public void update() {
-        if(!world.isRemote) {
-            if(Objects.equals(Databases.getDatabase("zoneecho_utils").getString("lamps"), "yellow")) {
-                getWorld().setBlockState(getPos(), ZoneEcho.lampV2Yellow.getDefaultState());
-            } else if (Objects.equals(Databases.getDatabase("zoneecho_utils").getString("lamps"), "red")) {
-                getWorld().setBlockState(getPos(), ZoneEcho.lampV2Red.getDefaultState());
-            } else {
-                getWorld().setBlockState(getPos(), ZoneEcho.lampV2fGray.getDefaultState());
+        if(!this.world.isRemote) {
+            if(Objects.isNull(Databases.getDatabase("zoneecho_utils").getString("lamps")) || Objects.equals(Databases.getDatabase("zoneecho_utils").getString("lamps"), "")) {
+                Databases.getDatabase("zoneecho_utils").setString("lamps", "yellow");
             }
-            syncToClient(Objects.requireNonNull(getWorld().getTileEntity(getPos())));
-            upd();
-            this.markDirty();
-            markCollisionsDirty();
-            markDirty();
-
+            getTileData().setString("state", Databases.getDatabase("zoneecho_utils").getString("lamps"));
         }
-    }
-    private void upd() {
-        getWorld().notifyNeighborsOfStateChange(getPos(), ZoneEcho.lampV2fGray, false);
+        System.out.println(getTileData().getString("state"));
+        if(Objects.equals(getTileData().getString("state"), "yellow")) {
+            getWorld().setBlockState(getPos(), ZoneEcho.lampV2Yellow.getDefaultState());
+        } else if (Objects.equals(getTileData().getString("state"), "red")) {
+            getWorld().setBlockState(getPos(), ZoneEcho.lampV2Red.getDefaultState());
+        } else {
+            getWorld().setBlockState(getPos(), ZoneEcho.lampV2fGray.getDefaultState());
+        }
+
+        DynamXContext.getPhysicsWorld().schedule(this::markCollisionsDirty);
+        this.computeBoundingBox();
+        markDirty();
+        sync();
         getWorld().notifyLightSet(getPos());
+
+
     }
 }
