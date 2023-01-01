@@ -41,7 +41,6 @@ public class TileLamp extends TileEntitySyncClient implements ITickable {
             }
             getTileData().setString("state", Databases.getDatabase("zoneecho_utils").getString("lamps"));
         }
-        System.out.println(getTileData().getString("state"));
         if(Objects.equals(getTileData().getString("state"), "yellow")) {
             getWorld().setBlockState(getPos(), ZoneEcho.lampV2Yellow.getDefaultState());
         } else if (Objects.equals(getTileData().getString("state"), "red")) {
