@@ -36,10 +36,14 @@ public class TileLamp extends TileEntitySyncClient implements ITickable {
     @Override
     public void update() {
         if(!this.world.isRemote) {
-            if(Objects.isNull(Databases.getDatabase("zoneecho_utils").getString("lamps")) || Objects.equals(Databases.getDatabase("zoneecho_utils").getString("lamps"), "")) {
+            if(Objects.isNull(Databases.getDatabase("zoneecho_utils").getString("lamps")) || Objects.equals(Databases.getDatabase("zoneecho_utils").getString("lamps"), "")) { // I don't understand why but sometimes the database is null
                 Databases.getDatabase("zoneecho_utils").setString("lamps", "yellow");
+                getTileData().setString("state", "yellow");
+                getWorld().setBlockState(getPos(), ZoneEcho.lampV2Yellow.getDefaultState());
             }
             getTileData().setString("state", Databases.getDatabase("zoneecho_utils").getString("lamps"));
+            getTileData().setString("state", "yellow");
+            sync();
         }
         if(Objects.equals(getTileData().getString("state"), "yellow")) {
             getWorld().setBlockState(getPos(), ZoneEcho.lampV2Yellow.getDefaultState());
@@ -52,7 +56,8 @@ public class TileLamp extends TileEntitySyncClient implements ITickable {
         DynamXContext.getPhysicsWorld().schedule(this::markCollisionsDirty);
         this.computeBoundingBox();
         markDirty();
-        sync();
+
+        markBlockForUpdate(this.world, this.pos);
         getWorld().notifyLightSet(getPos());
 
 

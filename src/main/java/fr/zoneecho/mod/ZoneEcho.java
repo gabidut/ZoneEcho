@@ -17,13 +17,15 @@ import fr.zoneecho.mod.proxy.CommonProxy;
 import fr.zoneecho.mod.tabs.MainTab;
 import fr.zoneecho.mod.util.Ref;
 import fr.zoneecho.mod.util.command.*;
-import fr.zoneecho.mod.util.css.GuiPersoCreate;
+import fr.zoneecho.mod.util.css.ErrorToast;
+import fr.zoneecho.mod.util.css.GuiEchapMenu;
 import fr.zoneecho.mod.util.network.*;
 import fr.zoneecho.mod.webserver.MainHandler;
 import fr.zoneecho.mod.webserver.RapportsHandler;
 import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
+import net.minecraft.client.gui.GuiIngameMenu;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.creativetab.CreativeTabs;
@@ -34,6 +36,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
@@ -51,7 +54,10 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.logging.log4j.Logger;
+import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
+import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 
 import java.io.IOException;
@@ -142,6 +148,7 @@ public class ZoneEcho {
             ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("zoneecho","css/computer/rapport.css"));
             ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("zoneecho","css/jobreader.css"));
             ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("zoneecho","css/delimiter.css"));
+            ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("zoneecho","css/echap.css"));
 
             if(Ref.optiFPS) {
                 logger.info("FPS optimiser enabled.");
@@ -176,6 +183,7 @@ public class ZoneEcho {
         network.registerMessage(PacketOpenDelimiter.Handler.class, PacketOpenDelimiter.class, 21, Side.CLIENT);
         network.registerMessage(PacketSyncDelimiterToPlayer.Handler.class, PacketSyncDelimiterToPlayer.class, 22, Side.CLIENT);
         network.registerMessage(PacketOpenComputer.Handler.class, PacketOpenComputer.class, 23, Side.CLIENT);
+        network.registerMessage(PacketSendToast.Handler.class, PacketSendToast.class, 24, Side.CLIENT);
 
         SyncedDatabases.add("zoneecho_playerdata");
         dbPlayer = Databases.getDatabase("zoneecho_playerdata");
@@ -273,15 +281,17 @@ public class ZoneEcho {
         event.registerServerCommand(new CommandAlarmOther());
         event.registerServerCommand(new CommandMakeMeBug());
         event.registerServerCommand(new CommandChooseJob());
+        event.registerServerCommand(new CommandWarn());
     }
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
-    public void onEvent(InputEvent.KeyInputEvent event)
-    {
+    public void onEvent(InputEvent.KeyInputEvent event) throws LWJGLException {
         if(openJobs.isPressed())
         {
-            ACsGuiApi.asyncLoadThenShowGui("jobs", GuiPersoCreate::new);
+//            ACsGuiApi.asyncLoadThenShowGui("jobs", GuiPersoCreate::new);
             // ACsGuiApi.asyncLoadThenShowGui("computer", GuiHomeOS::new);
+            Minecraft.getMinecraft().getToastGui().add(new ErrorToast(ErrorToast.Type.NARRATOR_TOGGLE, new TextComponentString("Dimention"), new TextComponentString("Défini en 1920x1080.")));
+            Display.setDisplayMode(new DisplayMode(1920, 1080));
         }
     }
 
@@ -299,6 +309,14 @@ public class ZoneEcho {
             GlStateManager.disableAlpha();
             GlStateManager.disableBlend();
             GL11.glPopMatrix();
+        }
+    }
+
+    @SubscribeEvent
+    @SideOnly(Side.CLIENT)
+    public void onPauseOpened(GuiOpenEvent e) {
+        if (e.getGui() instanceof GuiIngameMenu) {
+            ACsGuiApi.asyncLoadThenShowGui("pause", GuiEchapMenu::new);
         }
     }
 
