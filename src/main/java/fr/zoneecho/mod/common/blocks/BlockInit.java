@@ -1,10 +1,10 @@
 package fr.zoneecho.mod.common.blocks;
 
 import fr.zoneecho.mod.ZoneEcho;
-import fr.zoneecho.mod.common.blocks.type.*;
-import fr.zoneecho.mod.common.blocks.type.decoration.BlockDoubleSlabBase;
-import fr.zoneecho.mod.common.blocks.type.decoration.BlockHalfSlabBase;
-import fr.zoneecho.mod.common.blocks.type.stairs.BlockStairs;
+import fr.zoneecho.mod.common.blocks.types.*;
+import fr.zoneecho.mod.common.blocks.types.decoration.BlockDoubleSlabBase;
+import fr.zoneecho.mod.common.blocks.types.decoration.BlockHalfSlabBase;
+import fr.zoneecho.mod.common.blocks.types.stairs.BlockStairs;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockSlab;
 import net.minecraft.block.material.Material;

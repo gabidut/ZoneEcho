@@ -1,6 +1,6 @@
 package fr.zoneecho.mod.common.blocks;
 
-import fr.zoneecho.mod.util.Ref;
+import fr.zoneecho.mod.Ref;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.SoundEvent;
 import net.minecraftforge.event.RegistryEvent;

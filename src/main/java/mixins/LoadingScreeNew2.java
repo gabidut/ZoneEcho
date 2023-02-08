@@ -1,6 +1,6 @@
 package mixins;
 
-import fr.zoneecho.mod.util.Helper;
+import fr.zoneecho.mod.client.helpers.Helper;
 import org.spongepowered.asm.mixin.Mixin;
 
 

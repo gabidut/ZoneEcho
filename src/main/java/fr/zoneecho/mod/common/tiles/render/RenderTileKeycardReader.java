@@ -1,6 +1,6 @@
 package fr.zoneecho.mod.common.tiles.render;
 
-import fr.zoneecho.mod.common.blocks.ItemInit;
+import fr.zoneecho.mod.common.items.ItemInit;
 import fr.zoneecho.mod.common.tiles.TileCardReader;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.GlStateManager;
