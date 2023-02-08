@@ -1,7 +1,7 @@
 package fr.zoneecho.mod.objects.items;
 
 import fr.zoneecho.mod.ZoneEcho;
-import fr.zoneecho.mod.init.ItemInit;
+import fr.zoneecho.mod.common.blocks.ItemInit;
 import fr.zoneecho.mod.util.interfaces.IHasModel;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;

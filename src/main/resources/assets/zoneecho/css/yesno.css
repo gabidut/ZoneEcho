@@ -1,0 +1,16 @@
+.background {
+    background-color: #313131;
+    width: 30%;
+    height: 70%;
+    border: 5px #344350;
+    left: 35%;
+    top: 15%;
+}
+.largerPane {
+    background-color: #344350;
+    width: 34%;
+    height: 30%;
+    border: 5px #344350;
+    left: 33%;
+    top: 34%;
+}

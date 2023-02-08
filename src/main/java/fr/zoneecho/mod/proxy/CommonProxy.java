@@ -2,7 +2,7 @@ package fr.zoneecho.mod.proxy;
 
 import fr.nathanael2611.simpledatabasemanager.core.Databases;
 import fr.zoneecho.mod.ZoneEcho;
-import fr.zoneecho.mod.objects.tiles.TETVSign;
+import fr.zoneecho.mod.common.tiles.TETVSign;
 import fr.zoneecho.mod.util.PlayableJobs;
 import fr.zoneecho.mod.util.network.PacketSetBleeding;
 import fr.zoneecho.mod.util.network.PacketSetupFirstConnect;

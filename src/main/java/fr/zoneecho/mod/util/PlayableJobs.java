@@ -1,6 +1,6 @@
 package fr.zoneecho.mod.util;
 
-import fr.zoneecho.mod.init.ItemInit;
+import fr.zoneecho.mod.common.blocks.ItemInit;
 import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
 

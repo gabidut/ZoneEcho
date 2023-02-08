@@ -37,6 +37,7 @@ public class GuiEchapMenu extends GuiFrame {
         settingsButtun.setCssClass("buttons");
 
         settingsButtun.addClickListener((mouseX, mouseY, mouseButton) -> {
+
             Minecraft.getMinecraft().displayGuiScreen(new GuiOptions(new GuiIngameMenu(), Minecraft.getMinecraft().gameSettings));
         });
 
@@ -62,7 +63,7 @@ public class GuiEchapMenu extends GuiFrame {
         quitButton.addClickListener((mouseX, mouseY, mouseButton) -> {
             Minecraft.getMinecraft().world.sendQuittingDisconnectingPacket();
             Minecraft.getMinecraft().loadWorld(null);
-            ACsGuiApi.asyncLoadThenShowGui("mainmenu", GuiMainMenu::new);
+            ACsGuiApi.asyncLoadThenShowGui("mainmenu", MainMenu::new);
         });
 
         background.add(continueButton);

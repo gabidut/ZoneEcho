@@ -1,7 +1,7 @@
 package fr.zoneecho.mod.util;
 
-import fr.zoneecho.mod.init.BlockInit;
-import fr.zoneecho.mod.init.ItemInit;
+import fr.zoneecho.mod.common.blocks.BlockInit;
+import fr.zoneecho.mod.common.blocks.ItemInit;
 import fr.zoneecho.mod.util.interfaces.IHasModel;
 import net.minecraft.block.Block;
 import net.minecraft.item.Item;

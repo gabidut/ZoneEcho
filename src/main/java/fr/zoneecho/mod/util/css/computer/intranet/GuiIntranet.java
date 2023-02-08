@@ -7,7 +7,7 @@ import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.panel.GuiTabbedPane;
 import fr.aym.acsguis.component.textarea.GuiLabel;
 import fr.aym.acsguis.utils.GuiTextureSprite;
-import fr.zoneecho.mod.init.SoundInit;
+import fr.zoneecho.mod.common.blocks.SoundInit;
 import net.minecraft.util.ResourceLocation;
 
 import java.util.Collections;

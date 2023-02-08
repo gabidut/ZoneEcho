@@ -1,6 +1,6 @@
 package fr.zoneecho.mod.util.network;
 
-import fr.zoneecho.mod.init.SoundInit;
+import fr.zoneecho.mod.common.blocks.SoundInit;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;

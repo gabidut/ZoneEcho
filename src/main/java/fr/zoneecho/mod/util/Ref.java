@@ -12,5 +12,7 @@ public class Ref
     public static final String BASEURLAPI = "https://api.zone-echo.tk/discordlogger/javaEntry.php?";
     public static final String DISCORD_URL = "localhost:8000/";
 
+    public static final Integer MAX_INVENTORY_SIZE = 28;
+
 
 }

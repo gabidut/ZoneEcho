@@ -79,8 +79,7 @@ minecraft {
 
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
-            arg '--mixin.config mixins.zoneecho.json'
-
+            arg "-mixin.config=mixins.zoneecho.json"
         }
     }
 }
@@ -162,7 +161,7 @@ jar.finalizedBy('reobfShadowJar')
 
 jar {
     manifest {
-        attributes "FMLCorePlugin": "fr.zoneecho.mod.ZoneEchoLoadingPlugin"
+        attributes "FMLCorePlugin": "mixins.ZoneEchoLoadingPlugin"
         attributes "FMLAT": "dynamx_at.cfg"
         attributes "FMLCorePluginContainsFMLMod": "true"
         attributes "ForceLoadAsMod": "true"

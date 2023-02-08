@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "fr.zoneecho.mod.mixin",
+  "package": "mixins",
   "minVersion": "0.8",
   "client": [
     "MixinMinecraft"
@@ -9,5 +9,9 @@
   "injectors": {
     "defaultRequire": 1
   },
-  "refmap": "mixins.zoneecho.refmap.json"
+  "refmap": "mixins.zoneecho.refmap.json",
+  "mixins": [
+    "LoadingScreeNew2",
+    "LoadingScreeNew3"
+  ]
 }

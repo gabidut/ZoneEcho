@@ -7,7 +7,7 @@ import fr.aym.acsguis.component.panel.GuiFrame;
 import fr.aym.acsguis.component.panel.GuiPanel;
 import fr.aym.acsguis.component.textarea.GuiTextArea;
 import fr.zoneecho.mod.ZoneEcho;
-import fr.zoneecho.mod.init.SoundInit;
+import fr.zoneecho.mod.common.blocks.SoundInit;
 import fr.zoneecho.mod.util.network.PacketPlayKeycard;
 import net.minecraft.client.Minecraft;
 import net.minecraft.util.ResourceLocation;

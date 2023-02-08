@@ -1,7 +1,7 @@
 package fr.zoneecho.mod.util.network;
 
-import fr.zoneecho.mod.init.BlockInit;
-import fr.zoneecho.mod.init.ItemInit;
+import fr.zoneecho.mod.common.blocks.BlockInit;
+import fr.zoneecho.mod.common.blocks.ItemInit;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;

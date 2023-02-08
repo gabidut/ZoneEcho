@@ -1,23 +1,30 @@
 package fr.zoneecho.mod.proxy;
 
+import com.modularwarfare.client.gui.GuiInventoryModified;
 import com.mrcrayfish.obfuscate.client.event.ModelPlayerEvent;
-import fr.aym.acsguis.api.ACsGuiApi;
-import fr.zoneecho.mod.objects.blocks.BlockCardReader;
-import fr.zoneecho.mod.objects.tiles.TETVSign;
-import fr.zoneecho.mod.objects.tiles.TileCardReader;
-import fr.zoneecho.mod.objects.tiles.TileDoor;
-import fr.zoneecho.mod.objects.tiles.TileDoorO;
-import fr.zoneecho.mod.objects.tiles.render.RenderTileDoor;
-import fr.zoneecho.mod.objects.tiles.render.RenderTileDoorO;
-import fr.zoneecho.mod.objects.tiles.render.RenderTileKeycardReader;
-import fr.zoneecho.mod.objects.tiles.render.TETVSignRender;
+import fr.zoneecho.mod.ZoneEcho;
+import fr.zoneecho.mod.common.blocks.ItemInit;
+import fr.zoneecho.mod.common.blocks.type.BlockCardReader;
+import fr.zoneecho.mod.common.tiles.TETVSign;
+import fr.zoneecho.mod.common.tiles.TileCardReader;
+import fr.zoneecho.mod.common.tiles.TileDoor;
+import fr.zoneecho.mod.common.tiles.TileDoorO;
+import fr.zoneecho.mod.common.tiles.render.RenderTileDoor;
+import fr.zoneecho.mod.common.tiles.render.RenderTileDoorO;
+import fr.zoneecho.mod.common.tiles.render.RenderTileKeycardReader;
+import fr.zoneecho.mod.common.tiles.render.TETVSignRender;
+import fr.zoneecho.mod.util.ChatMode;
+import fr.zoneecho.mod.util.PlayerInventory;
 import fr.zoneecho.mod.util.Ref;
+import fr.zoneecho.mod.util.betterInventory.BetterInventoryGui;
+import fr.zoneecho.mod.util.css.MainMenu;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -28,6 +35,7 @@ import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.items.ItemStackHandler;
 import org.lwjgl.opengl.Display;
 
 import javax.imageio.ImageIO;
@@ -37,14 +45,14 @@ import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.util.List;
 
-public class ClientProxy extends CommonProxy
-{
+public class ClientProxy extends CommonProxy {
 
     public static Boolean isBleeding = false;
+    public static Boolean devMode = false;
+    public static ChatMode chatMode = ChatMode.HRP;
 
     @Override
-    public void registerItemRenderer(Item item, int meta)
-    {
+    public void registerItemRenderer(Item item, int meta) {
         ModelLoader.setCustomModelResourceLocation(item, meta, new ModelResourceLocation(item.getRegistryName(), "inventory"));
     }
 
@@ -54,9 +62,8 @@ public class ClientProxy extends CommonProxy
     }
 
     @Override
-    public void registerEntityRenderers()
-    {
-        super.registerEntityRenderers();	
+    public void registerEntityRenderers() {
+        super.registerEntityRenderers();
     }
 
     @SubscribeEvent
@@ -65,19 +72,26 @@ public class ClientProxy extends CommonProxy
     }
 
     @Override
-    public void preInit()
-    {
+    public void preInit() {
+
+        ItemStackHandler handler = new ItemStackHandler(5);
+        handler.setStackInSlot(0, new ItemStack(ItemInit.LOGO));
+        handler.setStackInSlot(2, new ItemStack(ItemInit.COMPONANTPLUG));
+        System.out.println("Ici sale merde");
+        System.out.println(handler.serializeNBT());
+//        Databases.getPlayerData("zoneecho").setObject("inventory", handler.serializeNBT());
 
         ClientRegistry.bindTileEntitySpecialRenderer(TETVSign.class, new TETVSignRender());
         ClientRegistry.bindTileEntitySpecialRenderer(TileDoor.class, new RenderTileDoor());
         ClientRegistry.bindTileEntitySpecialRenderer(TileDoorO.class, new RenderTileDoorO());
         ClientRegistry.bindTileEntitySpecialRenderer(TileCardReader.class, new RenderTileKeycardReader());
         try {
-            Display.setIcon(new ByteBuffer[] { inputToByteBuffer(Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation(Ref.MODID, "textures/logo.png")).getInputStream()) });
+            Display.setIcon(new ByteBuffer[]{inputToByteBuffer(Minecraft.getMinecraft().getResourceManager().getResource(new ResourceLocation(Ref.MODID, "textures/logo.png")).getInputStream())});
         } catch (IOException iOException) {
             iOException.printStackTrace();
         }
         super.preInit();
+        ZoneEcho.PlayerInventory = new PlayerInventory(Minecraft.getMinecraft().player);
         OBJLoader.INSTANCE.addDomain(Ref.MODID);
     }
 
@@ -90,9 +104,10 @@ public class ClientProxy extends CommonProxy
         byteBuffer.flip();
         return byteBuffer;
     }
+
     @SubscribeEvent
-    public void usernameRender(RenderLivingEvent.Specials.Pre e){
-        if(!(Minecraft.getMinecraft().player.isCreative() || Minecraft.getMinecraft().player.isSpectator())){
+    public void usernameRender(RenderLivingEvent.Specials.Pre e) {
+        if (!(Minecraft.getMinecraft().player.isCreative() || Minecraft.getMinecraft().player.isSpectator())) {
             e.setCanceled(true);
         }
     }
@@ -128,10 +143,11 @@ public class ClientProxy extends CommonProxy
         str = trimStringNewline(str);
         renderSplitStringCentered(renderer, str, x, y, wrapWidth, textColor);
     }
+
     private void renderSplitStringCentered(FontRenderer renderer, String str, int x, int y, int wrapWidth, int textColor) {
         List<String> lines = renderer.listFormattedStringToWidth(str, 55);
         for (int i = 0; i < lines.size() && i < 4; i++) {
-            String line = (String)lines.get(i);
+            String line = (String) lines.get(i);
             x = (wrapWidth + -renderer.getStringWidth(line)) / 2;
             renderer.drawString(line, x, y, textColor);
             y += renderer.FONT_HEIGHT;
@@ -147,7 +163,11 @@ public class ClientProxy extends CommonProxy
     @SubscribeEvent
     public void GuieventHandler(GuiOpenEvent e) {
         if (e.getGui() instanceof GuiMainMenu) {
-                ACsGuiApi.asyncLoadThenShowGui("mainmenu", fr.zoneecho.mod.util.css.GuiMainMenu::new);
+            e.setGui(new MainMenu().getGuiScreen());
+            //ACsGuiApi.asyncLoadThenShowGui("mainmenu", MainMenu::new);
+        }
+        if (e.getGui() instanceof GuiInventoryModified) {
+            e.setGui(new BetterInventoryGui(Minecraft.getMinecraft().player.inventoryContainer));
         }
     }
 }

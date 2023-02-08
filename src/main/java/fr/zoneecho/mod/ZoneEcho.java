@@ -8,10 +8,10 @@ import fr.nathanael2611.modularvoicechat.api.VoiceDispatchEvent;
 import fr.nathanael2611.simpledatabasemanager.core.Database;
 import fr.nathanael2611.simpledatabasemanager.core.Databases;
 import fr.nathanael2611.simpledatabasemanager.core.SyncedDatabases;
-import fr.zoneecho.mod.init.ItemInit;
+import fr.zoneecho.mod.common.blocks.ItemInit;
+import fr.zoneecho.mod.common.blocks.type.*;
+import fr.zoneecho.mod.common.tiles.*;
 import fr.zoneecho.mod.objects.Delimiter;
-import fr.zoneecho.mod.objects.blocks.*;
-import fr.zoneecho.mod.objects.tiles.*;
 import fr.zoneecho.mod.proxy.ClientProxy;
 import fr.zoneecho.mod.proxy.CommonProxy;
 import fr.zoneecho.mod.tabs.MainTab;
@@ -26,16 +26,18 @@ import net.minecraft.block.material.Material;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiIngameMenu;
-import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
+import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.text.TextComponentString;
+import net.minecraftforge.client.event.ClientChatEvent;
 import net.minecraftforge.client.event.GuiOpenEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -56,8 +58,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import org.apache.logging.log4j.Logger;
 import org.lwjgl.LWJGLException;
 import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 
 import java.io.IOException;
@@ -97,6 +97,9 @@ public class ZoneEcho {
     @SideOnly(Side.CLIENT)
     public static KeyBinding openJobs;
 
+    @SideOnly(Side.CLIENT)
+    public static IInventory PlayerInventory;
+
     public static void launchSocket() throws IOException {
         HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
         server.createContext("/trigger", new MainHandler());
@@ -108,11 +111,15 @@ public class ZoneEcho {
     public void preInit(FMLPreInitializationEvent e) throws InterruptedException, IOException, NoSuchAlgorithmException {
 
 
+
         logger = e.getModLog();
         instance = this;
         proxy.preInit();
         /* network */
         network = NetworkRegistry.INSTANCE.newSimpleChannel("zoneecho");
+
+
+
 
         /* DEV ZONE */
         List<AxisAlignedBB> ls = new ArrayList<>();
@@ -149,6 +156,8 @@ public class ZoneEcho {
             ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("zoneecho","css/jobreader.css"));
             ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("zoneecho","css/delimiter.css"));
             ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("zoneecho","css/echap.css"));
+            ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("zoneecho","css/inventory.css"));
+            ACsGuiApi.registerStyleSheetToPreload(new ResourceLocation("zoneecho","css/yesno.css"));
 
             if(Ref.optiFPS) {
                 logger.info("FPS optimiser enabled.");
@@ -184,6 +193,8 @@ public class ZoneEcho {
         network.registerMessage(PacketSyncDelimiterToPlayer.Handler.class, PacketSyncDelimiterToPlayer.class, 22, Side.CLIENT);
         network.registerMessage(PacketOpenComputer.Handler.class, PacketOpenComputer.class, 23, Side.CLIENT);
         network.registerMessage(PacketSendToast.Handler.class, PacketSendToast.class, 24, Side.CLIENT);
+        network.registerMessage(PacketGoBackToSleep.Handler.class, PacketGoBackToSleep.class, 25, Side.CLIENT);
+        
 
         SyncedDatabases.add("zoneecho_playerdata");
         dbPlayer = Databases.getDatabase("zoneecho_playerdata");
@@ -290,8 +301,26 @@ public class ZoneEcho {
         {
 //            ACsGuiApi.asyncLoadThenShowGui("jobs", GuiPersoCreate::new);
             // ACsGuiApi.asyncLoadThenShowGui("computer", GuiHomeOS::new);
-            Minecraft.getMinecraft().getToastGui().add(new ErrorToast(ErrorToast.Type.NARRATOR_TOGGLE, new TextComponentString("Dimention"), new TextComponentString("Défini en 1920x1080.")));
-            Display.setDisplayMode(new DisplayMode(1920, 1080));
+            // Display.setDisplayMode(new DisplayMode(1920, 1080));
+            //ACsGuiApi.asyncLoadThenShowGui("YesNoGui", () -> new YesNoGui(System.out::println, "Êtes-vous sûr(e) de vouloir supprimer votre personnage principal ? (Aucun retour en arrière n’est possible)"));
+            //ACsGuiApi.asyncLoadThenShowGui("inventory", GuiBetterInventory::new);
+
+        }
+        if(Keyboard.isKeyDown(Keyboard.KEY_F8))
+        {
+            Minecraft.getMinecraft().getToastGui().add(new ErrorToast(ErrorToast.Type.NARRATOR_TOGGLE, new TextComponentString("Debug"), new TextComponentString("Mode développeur acctivé.")));
+            ClientProxy.devMode = true;
+        }
+    }
+
+    @SubscribeEvent
+    @SideOnly(Side.CLIENT)
+    public void preRenderGameOverlat(RenderGameOverlayEvent.Pre event) {
+        if(!ClientProxy.devMode) {
+            if(event.getType().equals(RenderGameOverlayEvent.ElementType.HEALTH)) event.setCanceled(true);
+            if(event.getType().equals(RenderGameOverlayEvent.ElementType.FOOD)) event.setCanceled(true);
+            if(event.getType().equals(RenderGameOverlayEvent.ElementType.ARMOR)) event.setCanceled(true);
+            if(event.getType().equals(RenderGameOverlayEvent.ElementType.EXPERIENCE)) event.setCanceled(true);
         }
     }
 
@@ -301,22 +330,84 @@ public class ZoneEcho {
     {
         if(ClientProxy.isBleeding) {
             GL11.glPushMatrix();
-            GlStateManager.enableAlpha();
-            GlStateManager.enableBlend();
-            GlStateManager.tryBlendFuncSeparate(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA, GlStateManager.SourceFactor.ONE, GlStateManager.DestFactor.ZERO);
+            GL11.glEnable(GL11.GL_BLEND);
             Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(Ref.MODID, "textures/hud/damage.png"));
+            GL11.glColor4f(1.0F, 0.0F, 0.0F, 0.08F);
             Gui.drawModalRectWithCustomSizedTexture(0, 0, 0, 0, event.getResolution().getScaledWidth(), event.getResolution().getScaledHeight(), event.getResolution().getScaledWidth(), event.getResolution().getScaledHeight());
-            GlStateManager.disableAlpha();
-            GlStateManager.disableBlend();
             GL11.glPopMatrix();
         }
     }
 
     @SubscribeEvent
     @SideOnly(Side.CLIENT)
+    public void healthRender(RenderGameOverlayEvent.Post event) {
+        if (event.getType().equals(RenderGameOverlayEvent.ElementType.ALL) && !ClientProxy.devMode) {
+
+            GL11.glColor4f(1, 1, 1, 1);
+            GL11.glEnable(GL11.GL_BLEND);
+            GL11.glBlendFunc(770, 771);
+            int width = event.getResolution().getScaledWidth();
+
+            int x = width - 100;
+
+            ScaledResolution scaledresolution = event.getResolution();
+
+            //HEALTH
+
+            if (!Minecraft.getMinecraft().player.capabilities.disableDamage) {
+                Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(Ref.MODID, "textures/hud/health.png"));
+                // Gui.drawModalRectWithCustomSizedTexture(x, scaledresolution.getScaledHeight() - 76, 0, 0, 15, 70, 15, 70);
+                Gui.drawScaledCustomSizeModalRect(scaledresolution.getScaledWidth() - 50, scaledresolution.getScaledHeight() - 76, 0, 0, 15, 70, 15, 70, 15, 70);
+
+                int percent = (int) (Minecraft.getMinecraft().player.getHealth() * 70 / Minecraft.getMinecraft().player.getMaxHealth());
+                if (percent > 0) {
+                    Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(Ref.MODID, "textures/hud/fullhealth.png"));
+                    // Gui.drawScaledCustomSizeModalRect(x, scaledresolution.getScaledHeight() - 76, 0, 0, 15, percent, 15, (70 - percent), 15, 70);
+                    Gui.drawScaledCustomSizeModalRect(scaledresolution.getScaledWidth() - 50, scaledresolution.getScaledHeight() - 76 + (70 - percent), 0, 70 - percent, 15, percent, 15, percent, 15, 70);
+                }
+
+                // FOOD
+                Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(Ref.MODID, "textures/hud/food.png"));
+                // Gui.drawModalRectWithCustomSizedTexture(x, scaledresolution.getScaledHeight() - 76, 0, 0, 15, 70, 15, 70);
+                Gui.drawScaledCustomSizeModalRect(scaledresolution.getScaledWidth() - 30, scaledresolution.getScaledHeight() - 76, 0, 0, 15, 70, 15, 70, 15, 70);
+
+                int percentFood = (int) (Minecraft.getMinecraft().player.getFoodStats().getFoodLevel() * 70 / 20);
+                if (percentFood > 0) {
+                    Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(Ref.MODID, "textures/hud/fullfood.png"));
+                    // Gui.drawScaledCustomSizeModalRect(x, scaledresolution.getScaledHeight() - 76, 0, 0, 15, percent, 15, (70 - percent), 15, 70);
+                    Gui.drawScaledCustomSizeModalRect(scaledresolution.getScaledWidth() - 30, scaledresolution.getScaledHeight() - 76 + (70 - percentFood), 0, 70 - percentFood, 15, percentFood, 15, percentFood, 15, 70);
+                }
+
+                // ARMOR
+                Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(Ref.MODID, "textures/hud/shield.png"));
+                // Gui.drawModalRectWithCustomSizedTexture(x, scaledresolution.getScaledHeight() - 76, 0, 0, 15, 70, 15, 70);
+                Gui.drawScaledCustomSizeModalRect(scaledresolution.getScaledWidth() - 70, scaledresolution.getScaledHeight() - 76, 0, 0, 15, 70, 15, 70, 15, 70);
+
+                int percentArmor = (int) (Minecraft.getMinecraft().player.getTotalArmorValue() * 70 / 20);
+                if (percentArmor > 0) {
+                    Minecraft.getMinecraft().getTextureManager().bindTexture(new ResourceLocation(Ref.MODID, "textures/hud/fullshield.png"));
+                    // Gui.drawScaledCustomSizeModalRect(x, scaledresolution.getScaledHeight() - 76, 0, 0, 15, percent, 15, (70 - percent), 15, 70);
+                    Gui.drawScaledCustomSizeModalRect(scaledresolution.getScaledWidth() - 70, scaledresolution.getScaledHeight() - 76 + (70 - percentArmor), 0, 70 - percentArmor, 15, percentArmor, 15, percentArmor, 15, 70);
+                }
+            }
+        }
+    }
+
+
+
+    @SubscribeEvent
+    @SideOnly(Side.CLIENT)
     public void onPauseOpened(GuiOpenEvent e) {
         if (e.getGui() instanceof GuiIngameMenu) {
             ACsGuiApi.asyncLoadThenShowGui("pause", GuiEchapMenu::new);
+        }
+    }
+
+    @SubscribeEvent
+    @SideOnly(Side.CLIENT)
+    public void betterChat(ClientChatEvent e) {
+        if(!e.getOriginalMessage().startsWith("/")) {
+            e.setMessage(ClientProxy.chatMode.getValue() + " " + e.getMessage());
         }
     }
 
