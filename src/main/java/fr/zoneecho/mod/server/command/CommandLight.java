@@ -1,6 +1,8 @@
 package fr.zoneecho.mod.server.command;
 
 import fr.nathanael2611.simpledatabasemanager.core.Databases;
+import fr.zoneecho.mod.ZoneEcho;
+import fr.zoneecho.mod.server.utils.LampMode;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -29,13 +31,13 @@ public class CommandLight extends CommandBase {
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
         if(Objects.equals(args[0], "yellow")) {
-            Databases.getDatabase("zoneecho_utils").setString("lamps", "yellow");
+            ZoneEcho.alarmMode = LampMode.YELLOW;
             sender.sendMessage(new TextComponentString("Lights set to yellow"));
         } else if (Objects.equals(args[0], "red")) {
-            Databases.getDatabase("zoneecho_utils").setString("lamps", "red");
             sender.sendMessage(new TextComponentString("Lights set to red"));
+            ZoneEcho.alarmMode = LampMode.RED;
         } else {
-            Databases.getDatabase("zoneecho_utils").setString("lamps", "gray");
+            ZoneEcho.alarmMode = LampMode.GREY;
             sender.sendMessage(new TextComponentString("Lights set to none"));
         }
         Databases.save();

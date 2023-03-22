@@ -24,7 +24,7 @@ public abstract class BlockSlabBase extends BlockSlab implements IHasModel {
     public BlockSlabBase(String name, Material material, BlockSlab half)
     {
         super(material);
-        setUnlocalizedName(name);
+        //setUnlocalizedName(name);
         setRegistryName(name);
         setCreativeTab(ZoneEcho.ZONECHO_TAB);
         this.useNeighborBrightness = !this.isDouble();
@@ -64,11 +64,12 @@ public abstract class BlockSlabBase extends BlockSlab implements IHasModel {
         else return new BlockStateContainer(this, new IProperty[] {VARIANT});
     }
 
-    @Override
-    public String getUnlocalizedName(int meta)
-    {
-        return super.getUnlocalizedName();
-    }
+//    @Override
+//    public String getUnlocalizedName(int meta)
+//    {
+//        return super.getUnlocalizedName();
+//    }
+//
 
     @Override
     public IProperty<?> getVariantProperty()

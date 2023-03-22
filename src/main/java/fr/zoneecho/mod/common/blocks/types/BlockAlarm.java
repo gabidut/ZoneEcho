@@ -26,7 +26,7 @@ public class BlockAlarm extends Block implements IHasModel {
     private int usage;
     public BlockAlarm(String name, Material material, int usage) {
         super(material);
-        setUnlocalizedName(name);
+//        setRegistryName(name);
         setRegistryName(name);
         setCreativeTab(ZoneEcho.ZONECHO_TAB);
         setDefaultState(getDefaultState());

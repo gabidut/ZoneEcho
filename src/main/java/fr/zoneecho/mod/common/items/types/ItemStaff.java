@@ -15,7 +15,7 @@ import java.util.List;
 public class ItemStaff extends Item implements IHasModel {
     public ItemStaff(String name)
     {
-        setUnlocalizedName(name);
+        //setUnlocalizedName(name);
         setRegistryName(name);
         setCreativeTab(ZoneEcho.ZONEECHO_ITEMS);
         ItemInit.ITEMS.add(this);

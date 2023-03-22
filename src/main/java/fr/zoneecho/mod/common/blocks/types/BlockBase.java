@@ -28,7 +28,7 @@ public class BlockBase extends Block implements IHasModel {
 
     public BlockBase(String name, Material material) {
         super(material);
-        setUnlocalizedName(name);
+//        //setUnlocalizedName(name);
         setRegistryName(name);
         setCreativeTab(ZoneEcho.ZONECHO_TAB);
         setDefaultState(getDefaultState());
@@ -87,7 +87,8 @@ public class BlockBase extends Block implements IHasModel {
      */
     public IBlockState getStateFromMeta(int meta)
     {
-        EnumFacing enumfacing = EnumFacing.getFront(meta);
+        EnumFacing enumfacing = EnumFacing.byHorizontalIndex(meta); // WARNING CHECK ROTA HERE
+
 
         if (enumfacing.getAxis() == EnumFacing.Axis.Y)
         {

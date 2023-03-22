@@ -10,6 +10,8 @@ import fr.nathanael2611.simpledatabasemanager.core.Databases;
 import fr.nathanael2611.simpledatabasemanager.core.SyncedDatabases;
 import fr.zoneecho.mod.client.css.ErrorToast;
 import fr.zoneecho.mod.client.css.GuiEchapMenu;
+import fr.zoneecho.mod.client.gui.BrowserHUD;
+import fr.zoneecho.mod.client.gui.BrowserScreen;
 import fr.zoneecho.mod.client.tabs.MainTab;
 import fr.zoneecho.mod.common.blocks.types.*;
 import fr.zoneecho.mod.common.items.ItemInit;
@@ -19,6 +21,7 @@ import fr.zoneecho.mod.common.proxy.CommonProxy;
 import fr.zoneecho.mod.common.tiles.*;
 import fr.zoneecho.mod.common.utils.Delimiter;
 import fr.zoneecho.mod.server.command.*;
+import fr.zoneecho.mod.server.utils.LampMode;
 import fr.zoneecho.mod.server.webserver.MainHandler;
 import fr.zoneecho.mod.server.webserver.RapportsHandler;
 import net.minecraft.block.material.Material;
@@ -93,11 +96,17 @@ public class ZoneEcho {
     @SideOnly(Side.SERVER)
     public static boolean alarm;
 
+    public static LampMode alarmMode = LampMode.YELLOW;
     @SideOnly(Side.CLIENT)
     public static KeyBinding openJobs;
 
     @SideOnly(Side.CLIENT)
     public static IInventory PlayerInventory;
+
+    @SideOnly(Side.CLIENT)
+    public static BrowserScreen browserScreen;
+    @SideOnly(Side.CLIENT)
+    public static BrowserHUD browserHud;
 
     public static void launchSocket() throws IOException {
         HttpServer server = HttpServer.create(new InetSocketAddress(8000), 0);
@@ -193,6 +202,7 @@ public class ZoneEcho {
         network.registerMessage(PacketOpenComputer.Handler.class, PacketOpenComputer.class, 23, Side.CLIENT);
         network.registerMessage(PacketSendToast.Handler.class, PacketSendToast.class, 24, Side.CLIENT);
         network.registerMessage(PacketGoBackToSleep.Handler.class, PacketGoBackToSleep.class, 25, Side.CLIENT);
+        network.registerMessage(PacketConfirmPerso.Handler.class, PacketConfirmPerso.class, 26, Side.SERVER);
         
 
         SyncedDatabases.add("zoneecho_playerdata");
@@ -238,6 +248,7 @@ public class ZoneEcho {
         BlockDynxNuclear nuclear_panel = new BlockDynxNuclear(Material.ANVIL, Ref.MODID, "nuclear_panel", "nuclear_panel/nuclear_panel.obj");
         BlockDynxTVSign tvsign = new BlockDynxTVSign(Material.ANVIL, Ref.MODID, "tvsign", "tvsign/tele.obj");
         BlockDynx displaytwoscreen = new BlockDynx(Material.ANVIL, Ref.MODID, "display", "display/display.obj");
+        BlockDynx smokesensor = new BlockDynx(Material.ANVIL, Ref.MODID, "smokesensor", "smokesensor/smokesensor.obj");
 
         lampV2Yellow = new BlockDynxLampV2(Material.SAND, Ref.MODID, "lampY", "lamp/yellow.obj", 1);
         lampV2fGray = new BlockDynxLampV2(Material.SAND, Ref.MODID, "lampG", "lamp/gray.obj", 3);
@@ -275,6 +286,7 @@ public class ZoneEcho {
 
     @Mod.EventHandler
     public void postinit(FMLPostInitializationEvent e) {
+        MinecraftForge.EVENT_BUS.register(BrowserHUD.class);
     }
 
     @Mod.EventHandler
@@ -307,7 +319,7 @@ public class ZoneEcho {
         }
         if(Keyboard.isKeyDown(Keyboard.KEY_F8))
         {
-            Minecraft.getMinecraft().getToastGui().add(new ErrorToast(ErrorToast.Type.NARRATOR_TOGGLE, new TextComponentString("Debug"), new TextComponentString("Mode développeur acctivé.")));
+            Minecraft.getMinecraft().getToastGui().add(new ErrorToast(ErrorToast.Type.NARRATOR_TOGGLE, new TextComponentString("Debug"), new TextComponentString("Mode développeur activé.")));
             ClientProxy.devMode = true;
         }
     }

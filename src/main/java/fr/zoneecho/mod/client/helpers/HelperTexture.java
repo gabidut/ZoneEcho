@@ -16,7 +16,7 @@ import java.io.InputStream;
 import static org.lwjgl.opengl.GL11.glGetError;
 
 public class HelperTexture {
-    private static final IResourcePack mcPack = Minecraft.getMinecraft().mcDefaultResourcePack;
+    private static final IResourcePack mcPack = Minecraft.getMinecraft().defaultResourcePack;
     private static final IResourcePack fmlPack = createResourcePack(FMLSanityChecker.fmlLocation);
 
     static InputStream open(ResourceLocation loc, @Nullable ResourceLocation fallback, boolean allowResourcePack) throws IOException

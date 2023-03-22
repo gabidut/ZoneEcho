@@ -11,7 +11,7 @@ import javax.annotation.Nullable;
 public class ItemBase extends Item implements IHasModel {
     public ItemBase(String name)
     {
-        setUnlocalizedName(name);
+        //setUnlocalizedName(name);
         setRegistryName(name);
         setCreativeTab(ZoneEcho.ZONECHO_UTILS);
         ItemInit.ITEMS.add(this);

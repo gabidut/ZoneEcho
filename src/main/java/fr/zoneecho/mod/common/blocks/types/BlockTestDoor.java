@@ -36,7 +36,7 @@ public class BlockTestDoor extends Block implements IHasModel {
     public BlockTestDoor(String name, Material material) {
         super(material);
 
-        setUnlocalizedName(name);
+//        //setUnlocalizedName(name);
         setRegistryName(name);
         setCreativeTab(ZoneEcho.ZONECHO_UTILS);
         setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(POWERED, Boolean.valueOf(false)));
@@ -104,7 +104,7 @@ public class BlockTestDoor extends Block implements IHasModel {
      */
     public IBlockState getStateFromMeta(int meta)
     {
-        EnumFacing enumfacing = EnumFacing.getFront(meta);
+        EnumFacing enumfacing = EnumFacing.byHorizontalIndex(meta);
 
         if (enumfacing.getAxis() == EnumFacing.Axis.Y)
         {

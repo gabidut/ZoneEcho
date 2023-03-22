@@ -29,7 +29,7 @@ public class BlockDelimiter extends Block implements IHasModel {
     private int usage;
     public BlockDelimiter(String name, Material material, int usage) {
         super(material);
-        setUnlocalizedName(name);
+//        //setUnlocalizedName(name);
         setRegistryName(name);
         setCreativeTab(ZoneEcho.ZONECHO_TAB);
         setDefaultState(getDefaultState());

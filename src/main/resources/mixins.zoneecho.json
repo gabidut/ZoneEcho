@@ -9,9 +9,5 @@
   "injectors": {
     "defaultRequire": 1
   },
-  "refmap": "mixins.zoneecho.refmap.json",
-  "mixins": [
-    "LoadingScreeNew2",
-    "LoadingScreeNew3"
-  ]
+  "refmap": "mixins.zoneecho.refmap.json"
 }

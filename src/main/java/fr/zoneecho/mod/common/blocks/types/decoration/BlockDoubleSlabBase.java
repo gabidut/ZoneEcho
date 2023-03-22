@@ -37,6 +37,11 @@ public class BlockDoubleSlabBase extends BlockSlabBase implements IHasModel {
     }
 
     @Override
+    public String getTranslationKey(int meta) {
+        return "tile." + this.getTranslationKey() + "." + Variant.DEFAULT.getName();
+    }
+
+    @Override
     public boolean isDouble()
     {
         return true;

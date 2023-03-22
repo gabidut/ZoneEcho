@@ -13,7 +13,7 @@ import java.util.Objects;
 public class BlockStairs extends net.minecraft.block.BlockStairs implements IHasModel {
     public BlockStairs(String name, IBlockState modelState) {
         super(modelState);
-        setUnlocalizedName(name);
+        //setUnlocalizedName(name);
         setRegistryName(name);
         setCreativeTab(ZoneEcho.ZONECHO_UTILS);
 

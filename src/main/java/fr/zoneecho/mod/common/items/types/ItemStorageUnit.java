@@ -16,7 +16,7 @@ import java.util.List;
 public class ItemStorageUnit extends Item implements IHasModel {
     public ItemStorageUnit(String name)
     {
-        setUnlocalizedName(name);
+        //setUnlocalizedName(name);
         setRegistryName(name);
         setCreativeTab(ZoneEcho.ZONECHO_TAB);
         ItemInit.ITEMS.add(this);

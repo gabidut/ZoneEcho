@@ -18,7 +18,7 @@ import java.util.List;
 public class ItemWrench extends Item implements IHasModel {
     public ItemWrench(String name)
     {
-        setUnlocalizedName(name);
+        //setUnlocalizedName(name);
         setRegistryName(name);
         setCreativeTab(ZoneEcho.ZONECHO_TAB);
 

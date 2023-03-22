@@ -32,8 +32,9 @@ public class BlockDynxLampV2 extends DynamXBlock {
         }
     }
 
+
     @Override
-    public CreativeTabs getCreativeTabToDisplayOn() {
+    public CreativeTabs getCreativeTab() {
         if(data == 1) {
             return ZoneEcho.ZONECHO_UTILS;
         } else if(data == 2) {
@@ -45,6 +46,10 @@ public class BlockDynxLampV2 extends DynamXBlock {
 
     @Override
     public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
+        if(!worldIn.isRemote) {
+            System.out.println("Side here");
+            System.out.println(ZoneEcho.alarmMode);
+        }
         super.updateTick(worldIn, pos, state, rand);
     }
 
@@ -53,10 +58,17 @@ public class BlockDynxLampV2 extends DynamXBlock {
         return true;
     }
 
+
     @Nullable
     @Override
     public TileEntity createTileEntity(World world, IBlockState state) {
+        System.out.println("Calling createTileEntity");
         return new TileLamp(blockObjectInfo);
+    }
+
+    @Override
+    public boolean hasTileEntity(IBlockState state) {
+        return true;
     }
 }
 

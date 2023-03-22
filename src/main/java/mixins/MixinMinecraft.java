@@ -9,10 +9,6 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 
-import java.awt.*;
-
-import static org.lwjgl.opengl.GL11.*;
-
 
 @Mixin(Minecraft.class)
 public abstract class MixinMinecraft {
@@ -50,23 +46,7 @@ public abstract class MixinMinecraft {
 
             Display.create();
 
-
-            Rectangle a = Display.getParent().getBounds();
-            glPushMatrix();
-
-            glEnable(GL_TEXTURE_2D);
-            glDisable(GL_DEPTH_TEST);
-
-            glColor3b((byte) 0, (byte) 0, (byte) 0);
-
-            glOrtho(0, a.getWidth(), a.getHeight(), 0, -1, 1);
-            glRectd(50, 50, a.getWidth(), a.getHeight());
-
-            glDisable(GL_TEXTURE_2D);
-            glEnable(GL_DEPTH_TEST);
-            Display.update();
-
-            glPopMatrix();
+            
         }
     }
 

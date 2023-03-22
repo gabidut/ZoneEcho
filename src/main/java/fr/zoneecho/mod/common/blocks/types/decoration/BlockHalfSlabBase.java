@@ -35,4 +35,9 @@ public class BlockHalfSlabBase extends BlockSlabBase implements IHasModel {
     public void registerModels() {
         ZoneEcho.proxy.registerItemRenderer(ItemSlab.getItemFromBlock(this), 0);
     }
+
+    @Override
+    public String getTranslationKey(int meta) {
+        return "tile." + this.getTranslationKey() + "." + Variant.DEFAULT.getName();
+    }
 }

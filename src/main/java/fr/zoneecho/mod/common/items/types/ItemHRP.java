@@ -11,7 +11,7 @@ import javax.annotation.Nullable;
 public class ItemHRP extends Item implements IHasModel {
     public ItemHRP(String name)
     {
-        setUnlocalizedName(name);
+        //setUnlocalizedName(name);
         setRegistryName(name);
         setCreativeTab(ZoneEcho.ZONECHO_TAB);
         ItemInit.ITEMS.add(this);

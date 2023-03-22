@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créer son personnage</title>
+</head>
+
+<body>
+<div class="main">
+    <div class="left-pane">
+        <div class="visible">
+            <h3>Création de votre <br> personnage <span id="personame">persoName</span>.</h3>
+        </div>
+    </div>
+    <div class="form">
+        <input type="text" name="surname" id="surname" placeholder="Prénom"></input>
+        <input type="text" name="name" placeholder="Nom" id="name">
+        <select id="sex">
+            <option value="MALE">Homme</option>
+            <option value="FEMALE">Femme</option>
+        </select>
+        <input type="date" name="age" value="1990-12-01" placeholder="Date de naissance (dd/mm/aaaa)" id="date"></input>
+        <input type="submit" value="Créer !" class="create" onclick="confirm()">
+    </div>
+</div>
+</body>
+
+</html>
+
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@600&display=swap');
+
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        overflow: hidden;
+    }
+    * {
+        font-family: 'Montserrat', sans-serif;
+    }
+    .main {
+        background-color: transparent;
+        width: 900px;
+        height: 50%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .form {
+        background-color: #344350;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        height: 80%;
+        width: 500px;
+    }
+
+    input {
+        background: #FFFFFF;
+        border: 5px solid #606870;
+        border-radius: 20px;
+        width: 400px;
+        height: 50px;
+        margin-top: 2%;
+        padding-left: 5px;
+    }
+
+
+    input::placeholder {
+        color: #606870;
+        font-size: 1.2em;
+        padding-left: 10px;
+        font-weight: 00;
+    }
+    .create {
+        background: #344350;
+        border: 5px solid #606870;
+        color: #FFFFFF;
+        border-radius: 20px;
+        margin-top: 5%;
+    }
+
+    .left-pane {
+        background: #313131;
+        border: 20px solid #344350;
+        transform: translate(25%, 35%);
+        z-index: -1;
+        height: 80%;
+        color: #fff;
+        margin: 0;
+        width: 500px;
+    }
+    .visible {
+        max-width: 76%;
+        height: 100%;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    select {
+        background: #FFFFFF;
+        border: 5px solid #606870;
+        border-radius: 20px;
+        width: 410px;
+        height: 50px;
+        margin-top: 2%;
+        /*padding-left: 5px;*/
+    }
+    option {
+        background: #FFFFFF;
+        border: 5px solid #606870;
+        border-radius: 20px;
+        width: 410px;
+        height: 50px;
+        margin-top: 2%;
+        /*padding-left: 5px;*/
+    }
+
+    h3 {
+        padding: 10px;
+    }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    let once = false;
+    let perso = "";
+
+    $(function() {
+        window.mcefQuery({
+            "request": "$getDataOfPlayer",
+            "persistent": false,
+            "onSuccess": function(msg) {
+                sperso(msg)
+            },
+        });
+    });
+
+    function confirm() {
+        if(once) return;
+        if(document.getElementById("surname").value === "" || document.getElementById("name").value === "" || document.getElementById("date").value === "") {
+            alert("Veuillez remplir tous les champs.");
+            return;
+        }
+        $(function() {
+            window.mcefQuery({
+                "request": "$usernameForm:" + document.getElementById("name").value.replaceAll(":", "") + ":" + document.getElementById("surname").value.replaceAll(":", "") + ":" + document.getElementById("date").value.replaceAll(":", "") + ":" + perso + ":" + document.getElementById("sex").value,
+                "persistent": false
+            });
+        });
+
+
+    }
+
+    function sperso(name) {
+        let internal = name.split(":");
+        perso = internal[1];
+
+        console.error(perso)
+        document.getElementById("personame").innerText = internal[0];
+    }
+
+
+</script>

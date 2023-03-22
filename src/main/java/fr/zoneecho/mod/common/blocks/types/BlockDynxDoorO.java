@@ -7,7 +7,6 @@ import fr.zoneecho.mod.common.tiles.TileDoorO;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.Entity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -42,10 +41,10 @@ public class BlockDynxDoorO extends DynamXBlock {
         return null;
     }
 
-    @Override
-    public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
-        super.onEntityCollidedWithBlock(worldIn, pos, state, entityIn);
-    }
+//    @Override
+//    public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn) {
+//        super.onEntityCollidedWithBlock(worldIn, pos, state, entityIn);
+//    }
     @Override
     public boolean canCollideCheck(IBlockState state, boolean hitIfLiquid) {
         return false;

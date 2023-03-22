@@ -6,6 +6,7 @@ import fr.zoneecho.mod.Ref;
 import fr.zoneecho.mod.ZoneEcho;
 import fr.zoneecho.mod.client.betterInventory.BetterInventoryGui;
 import fr.zoneecho.mod.client.css.MainMenu;
+import fr.zoneecho.mod.client.gui.BrowserScreen;
 import fr.zoneecho.mod.common.blocks.types.BlockCardReader;
 import fr.zoneecho.mod.common.items.ItemInit;
 import fr.zoneecho.mod.common.tiles.TETVSign;
@@ -50,6 +51,8 @@ public class ClientProxy extends CommonProxy {
     public static Boolean isBleeding = false;
     public static Boolean devMode = false;
     public static ChatMode chatMode = ChatMode.HRP;
+    public static int guiToDisplay = 0;
+    public static String createPersoLastCharName = "";
 
     @Override
     public void registerItemRenderer(Item item, int meta) {
@@ -169,5 +172,20 @@ public class ClientProxy extends CommonProxy {
         if (e.getGui() instanceof GuiInventoryModified) {
             e.setGui(new BetterInventoryGui(Minecraft.getMinecraft().player.inventoryContainer));
         }
+    }
+
+    public static void openWebPage(String url) {
+//        ZoneEcho.browserScreen = new BrowserScreen(url);
+
+//        ZoneEcho.browserScreen.openMenu();
+
+    }
+
+    public static void showScreen(String url) {
+        Minecraft mc = Minecraft.getMinecraft();
+        if(mc.currentScreen instanceof BrowserScreen)
+            ((BrowserScreen) mc.currentScreen).loadURL(url);
+        else
+            mc.displayGuiScreen(new BrowserScreen(url));
     }
 }

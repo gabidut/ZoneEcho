@@ -14,7 +14,7 @@ public class BlockDemo extends Block implements IHasModel {
 
     public BlockDemo(String name, Material material) {
         super(material);
-        setUnlocalizedName(name);
+//        //setUnlocalizedName(name);
         setRegistryName(name);
         setCreativeTab(ZoneEcho.ZONECHO_UTILS);
         translucent = true;

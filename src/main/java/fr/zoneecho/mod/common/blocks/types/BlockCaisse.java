@@ -37,7 +37,7 @@ public class BlockCaisse extends Block implements IHasModel {
 
     public BlockCaisse(String name, Material material) {
         super(material);
-        setUnlocalizedName(name);
+//        //setUnlocalizedName(name);
         setRegistryName(name);
         setCreativeTab(ZoneEcho.ZONECHO_TAB);
         setDefaultState(getDefaultState());
@@ -96,7 +96,7 @@ public class BlockCaisse extends Block implements IHasModel {
      */
     public IBlockState getStateFromMeta(int meta)
     {
-        EnumFacing enumfacing = EnumFacing.getFront(meta);
+        EnumFacing enumfacing = EnumFacing.byHorizontalIndex(meta);
 
         if (enumfacing.getAxis() == EnumFacing.Axis.Y)
         {

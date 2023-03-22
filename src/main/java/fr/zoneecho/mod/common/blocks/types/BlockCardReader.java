@@ -48,7 +48,7 @@ public class BlockCardReader extends Block implements IHasModel, ITileEntityProv
     public static int tryed = 0;
     public BlockCardReader(String name, Material material) {
         super(material);
-        setUnlocalizedName(name);
+//        //setUnlocalizedName(name);
         setRegistryName(name);
         setCreativeTab(ZoneEcho.ZONECHO_UTILS);
         setDefaultState(this.blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH).withProperty(POWERED, Boolean.valueOf(false)));
@@ -115,17 +115,17 @@ public class BlockCardReader extends Block implements IHasModel, ITileEntityProv
             }
             else if (enumfacing == EnumFacing.SOUTH && iblockstate1.isFullBlock() && !iblockstate.isFullBlock())
             {
-                enumfacing = EnumFacing.NORTH;
+                enumfacing = EnumFacing.SOUTH;
                 Objects.requireNonNull(worldIn.getTileEntity(pos)).getTileData().setFloat("rotate", 180F);
             }
             else if (enumfacing == EnumFacing.WEST && iblockstate2.isFullBlock() && !iblockstate3.isFullBlock())
             {
-                enumfacing = EnumFacing.NORTH;
+                enumfacing = EnumFacing.WEST;
                 Objects.requireNonNull(worldIn.getTileEntity(pos)).getTileData().setFloat("rotate", 90F);
             }
             else if (enumfacing == EnumFacing.EAST && iblockstate3.isFullBlock() && !iblockstate2.isFullBlock())
             {
-                enumfacing = EnumFacing.NORTH;
+                enumfacing = EnumFacing.WEST;
                 Objects.requireNonNull(worldIn.getTileEntity(pos)).getTileData().setFloat("rotate", 0F);
             }
 
@@ -145,7 +145,7 @@ public class BlockCardReader extends Block implements IHasModel, ITileEntityProv
      */
     public IBlockState getStateFromMeta(int meta)
     {
-        EnumFacing enumfacing = EnumFacing.getFront(meta);
+        EnumFacing enumfacing = EnumFacing.byHorizontalIndex(meta);
 
         if (enumfacing.getAxis() == EnumFacing.Axis.Y)
         {

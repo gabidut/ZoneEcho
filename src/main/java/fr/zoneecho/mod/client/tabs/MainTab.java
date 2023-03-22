@@ -14,10 +14,9 @@ public class MainTab extends CreativeTabs
         this.icon = icon;
     }
 
+
     @Override
-    public ItemStack getTabIconItem()
-    {
+    public ItemStack createIcon() {
         return this.icon;
     }
-
 }

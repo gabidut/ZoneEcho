@@ -51,13 +51,13 @@ public class GuiAboutMe extends GuiFrame {
         GuiPanel renderBackground = new GuiPanel();
         renderBackground.setCssClass("renderBackground");
 
-        GuiLabel name = new GuiLabel(data.getName());
+        GuiLabel name = new GuiLabel(data.getCharacter().getName());
         name.setCssClass("name");
 
-        GuiLabel Surname = new GuiLabel(data.getSurname());
+        GuiLabel Surname = new GuiLabel(data.getCharacter().getSurname());
         Surname.setCssClass("surname");
 
-        GuiLabel birth = new GuiLabel("01/01/2000");
+        GuiLabel birth = new GuiLabel(data.getCharacter().getDate());
         birth.setCssClass("birth");
 
         GuiLabel job = new GuiLabel("Membre du personnel de la Zone-Echo.");

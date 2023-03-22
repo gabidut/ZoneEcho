@@ -1,29 +1,24 @@
 package fr.zoneecho.mod.common.utils;
 
 public class DataAboutMe {
-    private String name;
-    private String surname;
+    private Character c;
     private String job;
     private String speciality;
 
-    public DataAboutMe(String name, String surname, String job, String speciality) {
-        this.name = name;
-        this.surname = surname;
+    public DataAboutMe(Character c, String job, String speciality) {
+        this.c = c;
         this.job = job;
         this.speciality = speciality;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getSurname() {
-        return surname;
     }
 
     public String getJob() {
         return job;
     }
+
+    public Character getCharacter() {
+        return c;
+    }
+
 
     public String getSpeciality() {
         return speciality;

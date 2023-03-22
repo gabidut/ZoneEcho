@@ -3,6 +3,7 @@ package fr.zoneecho.mod.common.network;
 import fr.aym.acsguis.api.ACsGuiApi;
 import fr.nathanael2611.simpledatabasemanager.core.Databases;
 import fr.zoneecho.mod.client.css.GuiAboutMe;
+import fr.zoneecho.mod.common.utils.Character;
 import fr.zoneecho.mod.common.utils.DataAboutMe;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -18,7 +19,7 @@ import java.util.Arrays;
 
 public class PacketGuiAboutMe implements IMessage {
 
-    private String name;
+    private String c;
     private String job;
     private String speciality;
 
@@ -27,7 +28,7 @@ public class PacketGuiAboutMe implements IMessage {
 
     public PacketGuiAboutMe(EntityPlayerMP player) {
         System.out.println(Arrays.toString(Databases.getPlayerData(player).getAllEntryNames()));
-        this.name = Databases.getPlayerData(player).getString("identity");
+        this.c = Databases.getPlayerData(player).getString("perso_main");
         this.job = "InDev";
         this.speciality = "InDev";
     }
@@ -36,7 +37,7 @@ public class PacketGuiAboutMe implements IMessage {
 
     @Override
     public void fromBytes(ByteBuf buf) {
-        name = ByteBufUtils.readUTF8String(buf);
+        c = ByteBufUtils.readUTF8String(buf);
         job = ByteBufUtils.readUTF8String(buf);
         speciality = ByteBufUtils.readUTF8String(buf);
 
@@ -44,7 +45,7 @@ public class PacketGuiAboutMe implements IMessage {
 
     @Override
     public void toBytes(ByteBuf buf) {
-        ByteBufUtils.writeUTF8String(buf, name);
+        ByteBufUtils.writeUTF8String(buf, c);
         ByteBufUtils.writeUTF8String(buf, job);
         ByteBufUtils.writeUTF8String(buf, speciality);
     }
@@ -54,8 +55,7 @@ public class PacketGuiAboutMe implements IMessage {
         @Override
         public IMessage onMessage(PacketGuiAboutMe message, MessageContext ctx) {
             DataAboutMe data = new DataAboutMe(
-                    message.name.split(";")[0],
-                    message.name.split(";")[1],
+                    Character.deserialize(message.c),
                     message.job,
                     message.speciality
             );
